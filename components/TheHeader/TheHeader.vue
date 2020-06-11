@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-navigation-drawer
       v-model="sideNav"
       absolute
@@ -47,9 +47,9 @@
         :key="item.title"
         class="hidden-xs-only"
       >
-        <v-btn text>
+        <v-btn text class="nav-links">
           <v-icon left>{{ item.icon }}</v-icon>
-          <nuxt-link :to="item.link">
+          <nuxt-link class="nav-link toolbar-items-a" :to="item.link">
             {{ item.title }}
           </nuxt-link>
         </v-btn>
@@ -72,11 +72,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-
-    <v-content>
-      <Nuxt />
-    </v-content>
-  </v-app>
+  </div>
 </template>
 
 <style scoped>
@@ -103,7 +99,9 @@
   text-decoration: none;
 }
 .nav-link.nuxt-link-exact-active {
-  border-bottom: 3px solid #06c4d1;
+  border-bottom: 2px solid #06c4d1;
+  padding: 2;
+  margin: 2;
 }
 
 .nav-link a {
@@ -115,6 +113,11 @@
 .nav-link a:active,
 .nav-link.nuxt-link-exact-active a {
   color: #06c4d1;
+}
+
+a.nav-link.toolbar-items-a {
+  color: white;
+  text-decoration: none;
 }
 </style>
 
