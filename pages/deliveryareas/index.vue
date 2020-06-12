@@ -28,15 +28,15 @@
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="headline">Creer une zone de livraison</span>
+                    <span class="headline">{{ formTitle }}</span>
                   </v-card-title>
                   <v-card-text>
-                    <form @submit.prevent="addDeliveryArea">
+                    <form ref="form" @submit.prevent="addDeliveryArea">
                       <v-container>
                         <v-row>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
-                              v-model="name"
+                              v-model="editedDeliveryArea.name"
                               :rules="nameRules"
                               label="Nom de la zone*"
                               required
@@ -44,28 +44,30 @@
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
-                              v-model="floornumber"
+                              v-model="editedDeliveryArea.floornumber"
                               :rules="numberRules"
-                              label="Nombre(s) d'Etage*"
+                              label="Nombre(s) d'Etage(s) *"
                               required
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="4">
                             <v-text-field
-                              v-model="floorname"
+                              v-model="editedDeliveryArea.floorname"
                               :rules="nameRules"
-                              label="Nom de l'Etage*"
-                              placeholder="si plusieurs etages separer le nom par ,"
+                              label="Nom de(s) l'Etage(s) *"
+                              placeholder="Separer les nom par une virgule"
                               required
                             ></v-text-field>
                           </v-col>
                           <!-- chantier a affecter selon la liste des chantiers deja enregistres-->
                           <v-col cols="12">
                             <v-autocomplete
-                              v-model="affectedconstructionsite"
+                              v-model="
+                                editedDeliveryArea.affectedconstructionsite
+                              "
                               :rules="itemRules"
                               :items="constructionSites"
-                              label="Selectionner Chantier"
+                              label="Selectionner un Chantier"
                               item-text="siteName"
                               item-value="siteName"
                               multiple
@@ -88,7 +90,7 @@
                           <!-- Materiel a affecter selon la liste des chantiers deja enregistres-->
                           <v-col cols="12">
                             <v-autocomplete
-                              v-model="defaultmaterials"
+                              v-model="editedDeliveryArea.defaultmaterials"
                               :rules="itemRules"
                               :items="siteMaterials"
                               label="Selectionner les moyens pour le chantier"
@@ -113,7 +115,7 @@
 
                           <v-col cols="12">
                             <v-select
-                              v-model="active"
+                              v-model="editedDeliveryArea.active"
                               :items="['true', 'false']"
                               label="Actif*"
                               required
@@ -126,7 +128,7 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialog = false"
+                    <v-btn color="blue darken-1" text @click="close()"
                       >Close</v-btn
                     >
                     <v-btn
@@ -135,7 +137,7 @@
                       :disabled="!formIsValid"
                       type="submit"
                       @click="addDeliveryArea()"
-                      >Ajouter</v-btn
+                      >{{ formButton }}</v-btn
                     >
                   </v-card-actions>
                 </v-card>
@@ -149,10 +151,12 @@
             small
             color="blue darken-2"
             class="mr-2"
-            @click="editItem(item)"
+            @click="editDeliveryArea(item)"
             >edit</v-icon
           >
-          <v-icon small color="red" @click="deleteItem(item)">delete</v-icon>
+          <v-icon small color="red" @click="deleteDeliveryArea(item)"
+            >delete</v-icon
+          >
         </template>
       </v-data-table>
     </v-container>
@@ -166,23 +170,35 @@ export default {
   data: () => ({
     dialog: false,
 
-    deliveryArea: '',
-    name: '',
+    // initialiased and secured data input
+    // name: '',
     nameRules: [
       (v) => !!v || 'Name is required',
-      (v) => v.length <= 10 || 'Name must be less than 10 characters'
+      (v) => v.length <= 20 || 'Name must be less than 20 characters'
     ],
     itemRules: [(v) => !!v || 'Name is required'],
     numberRules: [
       (v) =>
         !!v.toString().match(/^[0-9]+(\.?[0-9]+)?$/) || 'Number is required'
     ],
-    floornumber: '',
-    floorname: '',
-    defaultmaterials: '',
-    affectedconstructionsite: '',
-    active: '',
+    // floornumber: '',
+    // floorname: '',
+    // defaultmaterials: '',
+    // affectedconstructionsite: '',
+    // active: '',
 
+    // used to edit delivery area
+    editedIndex: -1,
+    editedDeliveryArea: {
+      name: '',
+      floornumber: '',
+      floorname: '',
+      defaultmaterials: '',
+      affectedconstructionsite: '',
+      active: ''
+    },
+
+    // Headers for data rendering
     headers: [
       {
         text: 'Nom de la Zone de livraison',
@@ -199,22 +215,29 @@ export default {
       { text: 'Actions', value: 'actions', sortable: false }
     ]
   }),
-
   computed: {
+    formTitle() {
+      return this.editedIndex === -1
+        ? 'Creer une zone de livraison'
+        : 'Editer une zone de livraison'
+    },
+    formButton() {
+      return this.editedIndex === -1 ? 'Ajouter' : 'Sauver'
+    },
     formIsValid() {
       return (
-        this.name !== '' &&
-        this.floornumber !== '' &&
-        this.floorname !== '' &&
-        this.defaultmaterials !== '' &&
-        this.affectedconstructionsite !== '' &&
-        this.active !== ''
+        this.editedDeliveryArea.name !== '' &&
+        this.editedDeliveryArea.floornumber !== '' &&
+        this.editedDeliveryArea.floorname !== '' &&
+        this.editedDeliveryArea.defaultmaterials !== '' &&
+        this.editedDeliveryArea.affectedconstructionsite !== '' &&
+        this.editedDeliveryArea.active !== ''
       )
     },
 
-    siteProviders() {
-      return this.$store.state.siteProviders
-    },
+    // siteProviders() {
+    //   return this.$store.state.siteProviders
+    // },
     constructionSites() {
       return this.$store.state.constructionSites
     },
@@ -226,28 +249,51 @@ export default {
     }
   },
 
-  methods: {
-    addDeliveryArea() {
-      // if (this.deliveryArea) {
-      //   // this.deliveryAreas.push(this.deliveryArea)
-      //   // this.dialog = false
-      //   // this.$store.commit('addDeliveryArea', this.deliveryArea)
-      //   // this.deliveryArea = ''
-      // }
-      const deliveryAreaData = {
-        name: this.name,
-        floornumber: this.floornumber,
-        floorname: this.floorname,
-        defaultmaterials: this.defaultmaterials,
-        affectedconstructionsite: this.affectedconstructionsite,
-        active: this.active
-      }
-      this.$store.dispatch('addDeliveryArea', deliveryAreaData)
-      this.dialog = false
-    },
-    editItem() {},
+  watch: {
+    dialog(val) {
+      val || this.close()
+    }
+  },
 
-    deleteItem() {}
+  methods: {
+    reset() {
+      this.$refs.form.reset()
+    },
+    addDeliveryArea() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.deliveryAreas[this.editedIndex], this.deliveryAreas)
+      } else {
+        const deliveryAreaData = {
+          name: this.editedDeliveryArea.name,
+          floornumber: this.editedDeliveryArea.floornumber,
+          floorname: this.editedDeliveryArea.floorname,
+          defaultmaterials: this.editedDeliveryArea.defaultmaterials,
+          affectedconstructionsite: this.editedDeliveryArea
+            .affectedconstructionsite,
+          active: this.editedDeliveryArea.active
+        }
+        this.$store.dispatch('addDeliveryArea', deliveryAreaData)
+        this.dialog = false
+      }
+    },
+    editDeliveryArea(item) {
+      this.editedIndex = this.deliveryAreas.indexOf(item)
+      this.editedDeliveryArea = Object.assign({}, item)
+      this.dialog = true
+    },
+
+    deleteDeliveryArea(item) {
+      const index = this.deliveryAreas.indexOf(item)
+      confirm('Are you sure you want to delete this item?') &&
+        // this.deliveryAreas.splice(index, 1)
+        this.$store.commit('deleteDeliveryArea', index)
+    },
+    close() {
+      this.dialog = false
+      this.$nextTick(() => {
+        this.editedIndex = -1
+      })
+    }
   }
 }
 </script>
