@@ -21,11 +21,11 @@ export default () => ({
       active: true
     },
     {
-      id: 'wwwww',
+      id: 'wwwcvww',
       name: 'Centrale T1:T2',
       floornumber: '1',
       floorname: ['Etage1'],
-      defaultmaterials: 'LIFT 01',
+      defaultmaterials: 'LIFT 02',
       additionalmaterial: 'Chariot Elevateur T1 RDC',
       affectedconstructionsite: 'Chantier3',
       active: true
@@ -55,7 +55,7 @@ export default () => ({
       responsible: 'Marc'
     },
     {
-      id: 'azeqsdqsdqrtyui',
+      id: 'azeqsdqxcsdqrtyui',
       siteName: 'Chantier3',
       imageUrl:
         'http://www.oeecentre.fr/wp-content/uploads/2018/05/Vista-PIC-3-6-1200.gif',
@@ -89,14 +89,14 @@ export default () => ({
       active: true
     },
     {
-      id: 'mmmmm',
+      id: 'mmvccxvmmm',
       name: 'Chariot Elevateur T1',
       deliveryarea: 'Auto-Sous Sol 2',
       affectedconstructionsite: 'Chantier2',
       active: true
     },
     {
-      id: 'mmsdmssdmm',
+      id: 'mmsdxxxmssdmm',
       name: 'Grue T1',
       deliveryarea: 'Auto-Sous Sol 2',
       affectedconstructionsite: 'Chantier2',

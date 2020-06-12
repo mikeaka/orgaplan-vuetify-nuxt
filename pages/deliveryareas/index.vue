@@ -31,86 +31,111 @@
                     <span class="headline">Creer une zone de livraison</span>
                   </v-card-title>
                   <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field
-                            label="Nom de la zone*"
-                            required
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field
-                            label="Nombre d Etage*"
-                            required
-                          ></v-text-field>
-                        </v-col>
-                        <!-- chantier a affecter selon la liste des chantiers deja enregistres-->
-                        <v-col cols="12">
-                          <v-autocomplete
-                            :items="constructionSites"
-                            label="Selectionner Chantier"
-                            item-text="siteName"
-                            item-value="siteName"
-                            multiple
-                          >
-                            <template v-slot:selection="data">
-                              <template v-if="typeof data.item !== 'object'">
-                                <v-list-item-content
-                                  v-text="data.item"
-                                ></v-list-item-content>
+                    <form @submit.prevent="addDeliveryArea">
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              v-model="name"
+                              :rules="nameRules"
+                              label="Nom de la zone*"
+                              required
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              v-model="floornumber"
+                              :rules="numberRules"
+                              label="Nombre(s) d'Etage*"
+                              required
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              v-model="floorname"
+                              :rules="nameRules"
+                              label="Nom de l'Etage*"
+                              placeholder="si plusieurs etages separer le nom par ,"
+                              required
+                            ></v-text-field>
+                          </v-col>
+                          <!-- chantier a affecter selon la liste des chantiers deja enregistres-->
+                          <v-col cols="12">
+                            <v-autocomplete
+                              v-model="affectedconstructionsite"
+                              :rules="itemRules"
+                              :items="constructionSites"
+                              label="Selectionner Chantier"
+                              item-text="siteName"
+                              item-value="siteName"
+                              multiple
+                            >
+                              <template v-slot:selection="data">
+                                <template v-if="typeof data.item !== 'object'">
+                                  <v-list-item-content
+                                    v-text="data.item"
+                                  ></v-list-item-content>
+                                </template>
+                                <v-list-item-content>
+                                  <v-list-item-title
+                                    v-html="data.item.siteName"
+                                  ></v-list-item-title>
+                                </v-list-item-content>
                               </template>
-                              <v-list-item-content>
-                                <v-list-item-title
-                                  v-html="data.item.siteName"
-                                ></v-list-item-title>
-                              </v-list-item-content>
-                            </template>
-                          </v-autocomplete>
-                        </v-col>
+                            </v-autocomplete>
+                          </v-col>
 
-                        <!-- Materiel a affecter selon la liste des chantiers deja enregistres-->
-                        <v-col cols="12">
-                          <v-autocomplete
-                            :items="siteMaterials"
-                            label="Selectionner les moyens pour le chantier"
-                            item-text="name"
-                            item-value="name"
-                            multiple
-                          >
-                            <template v-slot:selection="data">
-                              <template v-if="typeof data.item !== 'object'">
-                                <v-list-item-content
-                                  v-text="data.item"
-                                ></v-list-item-content>
+                          <!-- Materiel a affecter selon la liste des chantiers deja enregistres-->
+                          <v-col cols="12">
+                            <v-autocomplete
+                              v-model="defaultmaterials"
+                              :rules="itemRules"
+                              :items="siteMaterials"
+                              label="Selectionner les moyens pour le chantier"
+                              item-text="name"
+                              item-value="name"
+                              multiple
+                            >
+                              <template v-slot:selection="data">
+                                <template v-if="typeof data.item !== 'object'">
+                                  <v-list-item-content
+                                    v-text="data.item"
+                                  ></v-list-item-content>
+                                </template>
+                                <v-list-item-content>
+                                  <v-list-item-title
+                                    v-html="data.item.name"
+                                  ></v-list-item-title>
+                                </v-list-item-content>
                               </template>
-                              <v-list-item-content>
-                                <v-list-item-title
-                                  v-html="data.item.name"
-                                ></v-list-item-title>
-                              </v-list-item-content>
-                            </template>
-                          </v-autocomplete>
-                        </v-col>
+                            </v-autocomplete>
+                          </v-col>
 
-                        <v-col cols="12">
-                          <v-text-field
-                            label="Actif*"
-                            required
-                            placeholder="true ou false"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                    <small>*indique les champs obligatoires</small>
+                          <v-col cols="12">
+                            <v-select
+                              v-model="active"
+                              :items="['true', 'false']"
+                              label="Actif*"
+                              required
+                            ></v-select>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                      <small>*indique les champs obligatoires</small>
+                    </form>
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="dialog = false"
                       >Close</v-btn
                     >
-                    <v-btn color="blue darken-1" text @click="dialog = false"
-                      >Save</v-btn
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      :disabled="!formIsValid"
+                      type="submit"
+                      @click="addDeliveryArea()"
+                      >Ajouter</v-btn
                     >
                   </v-card-actions>
                 </v-card>
@@ -141,9 +166,26 @@ export default {
   data: () => ({
     dialog: false,
 
+    deliveryArea: '',
+    name: '',
+    nameRules: [
+      (v) => !!v || 'Name is required',
+      (v) => v.length <= 10 || 'Name must be less than 10 characters'
+    ],
+    itemRules: [(v) => !!v || 'Name is required'],
+    numberRules: [
+      (v) =>
+        !!v.toString().match(/^[0-9]+(\.?[0-9]+)?$/) || 'Number is required'
+    ],
+    floornumber: '',
+    floorname: '',
+    defaultmaterials: '',
+    affectedconstructionsite: '',
+    active: '',
+
     headers: [
       {
-        text: 'Nom Equipement',
+        text: 'Nom de la Zone de livraison',
         align: 'start',
         sortable: false,
         value: 'name'
@@ -155,15 +197,21 @@ export default {
 
       { text: 'Actif', value: 'active' },
       { text: 'Actions', value: 'actions', sortable: false }
-    ],
-
-    methods: {
-      editItem() {},
-
-      deleteItem() {}
-    }
+    ]
   }),
+
   computed: {
+    formIsValid() {
+      return (
+        this.name !== '' &&
+        this.floornumber !== '' &&
+        this.floorname !== '' &&
+        this.defaultmaterials !== '' &&
+        this.affectedconstructionsite !== '' &&
+        this.active !== ''
+      )
+    },
+
     siteProviders() {
       return this.$store.state.siteProviders
     },
@@ -176,6 +224,30 @@ export default {
     deliveryAreas() {
       return this.$store.state.deliveryAreas
     }
+  },
+
+  methods: {
+    addDeliveryArea() {
+      // if (this.deliveryArea) {
+      //   // this.deliveryAreas.push(this.deliveryArea)
+      //   // this.dialog = false
+      //   // this.$store.commit('addDeliveryArea', this.deliveryArea)
+      //   // this.deliveryArea = ''
+      // }
+      const deliveryAreaData = {
+        name: this.name,
+        floornumber: this.floornumber,
+        floorname: this.floorname,
+        defaultmaterials: this.defaultmaterials,
+        affectedconstructionsite: this.affectedconstructionsite,
+        active: this.active
+      }
+      this.$store.dispatch('addDeliveryArea', deliveryAreaData)
+      this.dialog = false
+    },
+    editItem() {},
+
+    deleteItem() {}
   }
 }
 </script>
