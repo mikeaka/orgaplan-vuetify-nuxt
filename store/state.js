@@ -67,12 +67,48 @@ export default () => ({
     }
   ],
   siteMaterials: [
-    { id: 'fffff', name: 'LIFT 01', active: true },
-    { id: 'hhhhh', name: 'LIFT 02', active: true },
-    { id: 'kkkkk', name: 'Chariot Elevateur T1 RDC', active: true },
-    { id: 'mmmmm', name: 'Chariot Elevateur T1', active: true },
-    { id: 'mmsdmssdmm', name: 'Grue T1', active: true },
-    { id: 'mmsdmssdmm', name: 'Grue T3', active: true }
+    {
+      id: 'fffff',
+      name: 'LIFT 01',
+      deliveryarea: 'Centrale T1:T2',
+      affectedconstructionsite: 'Chantier3',
+      active: true
+    },
+    {
+      id: 'hhhhh',
+      name: 'LIFT 02',
+      deliveryarea: 'Auto-Sous Sol 1',
+      affectedconstructionsite: 'Chantier1',
+      active: true
+    },
+    {
+      id: 'kkkkk',
+      name: 'Chariot Elevateur T1 RDC',
+      deliveryarea: 'Auto-Sous Sol 1',
+      affectedconstructionsite: 'Chantier1',
+      active: true
+    },
+    {
+      id: 'mmmmm',
+      name: 'Chariot Elevateur T1',
+      deliveryarea: 'Auto-Sous Sol 2',
+      affectedconstructionsite: 'Chantier2',
+      active: true
+    },
+    {
+      id: 'mmsdmssdmm',
+      name: 'Grue T1',
+      deliveryarea: 'Auto-Sous Sol 2',
+      affectedconstructionsite: 'Chantier2',
+      active: true
+    },
+    {
+      id: 'mmsdmssdmm',
+      name: 'Grue T3',
+      deliveryarea: 'Auto-Sous Sol 1',
+      affectedconstructionsite: 'Chantier1',
+      active: true
+    }
   ],
   siteProviders: [
     {
@@ -131,8 +167,35 @@ export default () => ({
     }
   ],
   compagny: [
-    { id: 'asfxzada', name: 'Microsoft', active: true },
-    { id: 'asfxzada', name: 'Google', active: true },
-    { id: 'asfxzada', name: 'vNext', active: false }
+    {
+      id: 'asfxzada',
+      name: 'Microsoft',
+      address: '53 rue salvador',
+      postalcode: '75010',
+      email: 'microsoft@microsoft.com',
+      phonenumber: '0135026578',
+      affectedconstructionsite: 'Chantier3',
+      active: true
+    },
+    {
+      id: 'asfxzada',
+      name: 'Google',
+      address: '75 rue dido',
+      postalcode: '94050',
+      email: 'google@google.com',
+      phonenumber: '0134526578',
+      affectedconstructionsite: 'Chantier1',
+      active: true
+    },
+    {
+      id: 'asfxzada',
+      name: 'vNext',
+      address: '32 rue tolbiac',
+      postalcode: '75020',
+      email: 'vnext@vnext.com',
+      phonenumber: '01752367895',
+      affectedconstructionsite: 'Chantier2',
+      active: false
+    }
   ]
 })

@@ -3,12 +3,12 @@
     <v-container class="my-5" fluid>
       <v-data-table
         :headers="headers"
-        :items="deliveryAreas"
+        :items="siteMaterials"
         class="elevation-1"
       >
         <template v-slot:top>
           <v-toolbar flat color="white">
-            <v-toolbar-title>Liste des Zones de livraison</v-toolbar-title>
+            <v-toolbar-title>Liste des Moyens</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
 
@@ -23,28 +23,23 @@
                     right
                     v-on="on"
                   >
-                    Ajouter une zone de livraison</v-btn
+                    Ajouter un Materiel</v-btn
                   >
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="headline">Creer une zone de livraison</span>
+                    <span class="headline">Creer un moyen de livraison</span>
                   </v-card-title>
                   <v-card-text>
                     <v-container>
                       <v-row>
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field
-                            label="Nom de la zone*"
+                            label="Nom du Materiel*"
                             required
                           ></v-text-field>
                         </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field
-                            label="Nombre d Etage*"
-                            required
-                          ></v-text-field>
-                        </v-col>
+
                         <!-- chantier a affecter selon la liste des chantiers deja enregistres-->
                         <v-col cols="12">
                           <v-autocomplete
@@ -69,11 +64,11 @@
                           </v-autocomplete>
                         </v-col>
 
-                        <!-- Materiel a affecter selon la liste des chantiers deja enregistres-->
+                        <!-- Zone de livraison a affecter selon la liste des zones deja enregistres-->
                         <v-col cols="12">
                           <v-autocomplete
-                            :items="siteMaterials"
-                            label="Selectionner les moyens pour le chantier"
+                            :items="deliveryAreas"
+                            label="Selectionner les zones de livraison"
                             item-text="name"
                             item-value="name"
                             multiple
@@ -136,7 +131,7 @@
 
 <script>
 export default {
-  name: 'DeliveryAreas',
+  name: 'Materials',
 
   data: () => ({
     dialog: false,
@@ -148,9 +143,7 @@ export default {
         sortable: false,
         value: 'name'
       },
-      { text: 'Nombre etage', value: 'floornumber' },
-      { text: 'Nom de Etage', value: 'floorname' },
-      { text: 'Materiel Obligatoire', value: 'defaultmaterials' },
+      { text: 'Zone de livraison affectee', value: 'deliveryarea' },
       { text: 'Chantier attache', value: 'affectedconstructionsite' },
 
       { text: 'Actif', value: 'active' },

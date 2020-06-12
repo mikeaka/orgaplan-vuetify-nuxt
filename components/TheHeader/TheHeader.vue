@@ -146,7 +146,8 @@ export default {
           link: '/deliveryareas'
         },
         { id: 'klhgdc', name: 'Gerer le materiel', link: '/materials' },
-        { id: 'klhgdsdef', name: 'Gerer les fournisseurs', link: '/providers' }
+        { id: 'klhgdsdef', name: 'Gerer les fournisseurs', link: '/providers' },
+        { id: 'sdsdwq', name: 'Gerer les entreprises', link: '/compagny' }
       ]
     }
   },

@@ -1,14 +1,10 @@
 <template>
   <div>
     <v-container class="my-5" fluid>
-      <v-data-table
-        :headers="headers"
-        :items="deliveryAreas"
-        class="elevation-1"
-      >
+      <v-data-table :headers="headers" :items="compagny" class="elevation-1">
         <template v-slot:top>
           <v-toolbar flat color="white">
-            <v-toolbar-title>Liste des Zones de livraison</v-toolbar-title>
+            <v-toolbar-title>Liste des Entreprises</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
 
@@ -23,27 +19,42 @@
                     right
                     v-on="on"
                   >
-                    Ajouter une zone de livraison</v-btn
+                    Ajouter une Entreprise</v-btn
                   >
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="headline">Creer une zone de livraison</span>
+                    <span class="headline">Creer une Entreprise</span>
                   </v-card-title>
                   <v-card-text>
                     <v-container>
                       <v-row>
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field
-                            label="Nom de la zone*"
+                            label="Nom de l entreprise*"
                             required
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field
-                            label="Nombre d Etage*"
+                            label="Address*"
                             required
                           ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            label="Code Postal*"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            label="Numero de Telephone*"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field label="Email*" required></v-text-field>
                         </v-col>
                         <!-- chantier a affecter selon la liste des chantiers deja enregistres-->
                         <v-col cols="12">
@@ -63,30 +74,6 @@
                               <v-list-item-content>
                                 <v-list-item-title
                                   v-html="data.item.siteName"
-                                ></v-list-item-title>
-                              </v-list-item-content>
-                            </template>
-                          </v-autocomplete>
-                        </v-col>
-
-                        <!-- Materiel a affecter selon la liste des chantiers deja enregistres-->
-                        <v-col cols="12">
-                          <v-autocomplete
-                            :items="siteMaterials"
-                            label="Selectionner les moyens pour le chantier"
-                            item-text="name"
-                            item-value="name"
-                            multiple
-                          >
-                            <template v-slot:selection="data">
-                              <template v-if="typeof data.item !== 'object'">
-                                <v-list-item-content
-                                  v-text="data.item"
-                                ></v-list-item-content>
-                              </template>
-                              <v-list-item-content>
-                                <v-list-item-title
-                                  v-html="data.item.name"
                                 ></v-list-item-title>
                               </v-list-item-content>
                             </template>
@@ -136,23 +123,23 @@
 
 <script>
 export default {
-  name: 'DeliveryAreas',
+  name: 'Compagny',
 
   data: () => ({
     dialog: false,
 
     headers: [
       {
-        text: 'Nom Equipement',
+        text: 'Nom Entreprise',
         align: 'start',
         sortable: false,
         value: 'name'
       },
-      { text: 'Nombre etage', value: 'floornumber' },
-      { text: 'Nom de Etage', value: 'floorname' },
-      { text: 'Materiel Obligatoire', value: 'defaultmaterials' },
-      { text: 'Chantier attache', value: 'affectedconstructionsite' },
-
+      { text: 'Adresse', value: 'address' },
+      { text: 'Code Postal', value: 'postalcode' },
+      { text: 'email', value: 'email' },
+      { text: 'telephone', value: 'phonenumber' },
+      { text: 'Chantier Affecte', value: 'affectedconstructionsite' },
       { text: 'Actif', value: 'active' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
@@ -175,6 +162,9 @@ export default {
     },
     deliveryAreas() {
       return this.$store.state.deliveryAreas
+    },
+    compagny() {
+      return this.$store.state.compagny
     }
   }
 }
