@@ -49,9 +49,9 @@
       >
         <v-btn text class="nav-links">
           <v-icon left>{{ item.icon }}</v-icon>
-          <nuxt-link class="nav-link toolbar-items-a" :to="item.link">
-            {{ item.title }}
-          </nuxt-link>
+          <nuxt-link class="nav-link toolbar-items-a" :to="item.link">{{
+            item.title
+          }}</nuxt-link>
         </v-btn>
       </v-toolbar-items>
 
@@ -64,9 +64,9 @@
         <v-list>
           <v-list-item v-for="admmenu in adminMenuItems" :key="admmenu.name">
             <v-list-item-title class="nav-links">
-              <nuxt-link class="nav-link" :to="admmenu.link">
-                {{ admmenu.name }}
-              </nuxt-link>
+              <nuxt-link class="nav-link" :to="admmenu.link">{{
+                admmenu.name
+              }}</nuxt-link>
             </v-list-item-title>
           </v-list-item>
         </v-list>
@@ -125,30 +125,12 @@ a.nav-link.toolbar-items-a {
 export default {
   data() {
     return {
-      drawer: true,
-      items: [
-        { icon: 'mdi-home', text: 'Home' },
-        { icon: 'mdi-fire', text: 'Trending' },
-        { icon: 'mdi-youtube-subscription', text: 'Subscriptions' },
-        { icon: 'mdi-folder', text: 'Library' },
-        { icon: 'mdi-history', text: 'History' },
-        { icon: 'mdi-clock', text: 'Watch Later' },
-        { icon: 'mdi-thumb-up', text: 'Liked videos' }
-      ],
-      items2: [
-        { picture: 28, text: 'Joseph' },
-        { picture: 38, text: 'Apple' },
-        { picture: 48, text: 'Xbox Ahoy' },
-        { picture: 58, text: 'Nokia' },
-        { picture: 78, text: 'MKBHD' }
-      ],
       sideNav: false,
       AdminUser: true,
       menuItems: [
         { icon: 'event_note', title: 'Planning', link: '/Schedules' },
         { icon: 'mdi-history', title: 'Historique', link: '/History' },
         { icon: 'show_chart', title: 'Statistiques', link: '/stats' },
-        { icon: 'local_shipping', title: 'Fournisseurs', link: '/Providers' },
         { icon: 'lock_open', title: 'Login', link: '/Login' },
         { icon: 'exit_to_app', title: 'Logout', link: '/Logout' }
       ],
@@ -161,9 +143,10 @@ export default {
         {
           id: 'sddfvx',
           name: 'Gerer les zones de livraison',
-          link: '/deliveryAreas'
+          link: '/deliveryareas'
         },
-        { id: 'klhgdc', name: 'Gerer le materiel', link: '/materials' }
+        { id: 'klhgdc', name: 'Gerer le materiel', link: '/materials' },
+        { id: 'klhgdsdef', name: 'Gerer les fournisseurs', link: '/providers' }
       ]
     }
   },

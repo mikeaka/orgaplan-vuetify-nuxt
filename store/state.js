@@ -1,8 +1,35 @@
 export default () => ({
   deliveryAreas: [
-    { id: 'sssss', name: 'Auto-Sous Sol 1', active: true },
-    { id: 'xxxxx', name: 'Auto-Sous Sol 2', active: true },
-    { id: 'wwwww', name: 'Centrale T1:T2', active: true }
+    {
+      id: 'sssss',
+      name: 'Auto-Sous Sol 1',
+      floornumber: '2',
+      floorname: ['Etage1', 'Etage2'],
+      defaultmaterials: 'LIFT 01',
+      additionalmaterial: 'Chariot Elevateur T1 RDC',
+      affectedconstructionsite: 'Chantier1',
+      active: true
+    },
+    {
+      id: 'xxxxx',
+      name: 'Auto-Sous Sol 2',
+      floornumber: '3',
+      floorname: ['Etage1', 'Etage2', 'Etage3'],
+      defaultmaterials: 'LIFT 01',
+      additionalmaterial: 'Chariot Elevateur T1 RDC',
+      affectedconstructionsite: 'Chantier2',
+      active: true
+    },
+    {
+      id: 'wwwww',
+      name: 'Centrale T1:T2',
+      floornumber: '1',
+      floorname: ['Etage1'],
+      defaultmaterials: 'LIFT 01',
+      additionalmaterial: 'Chariot Elevateur T1 RDC',
+      affectedconstructionsite: 'Chantier3',
+      active: true
+    }
   ],
   constructionSites: [
     {
@@ -43,7 +70,9 @@ export default () => ({
     { id: 'fffff', name: 'LIFT 01', active: true },
     { id: 'hhhhh', name: 'LIFT 02', active: true },
     { id: 'kkkkk', name: 'Chariot Elevateur T1 RDC', active: true },
-    { id: 'mmmmm', name: 'Chariot Elevateur T1', active: true }
+    { id: 'mmmmm', name: 'Chariot Elevateur T1', active: true },
+    { id: 'mmsdmssdmm', name: 'Grue T1', active: true },
+    { id: 'mmsdmssdmm', name: 'Grue T3', active: true }
   ],
   siteProviders: [
     {

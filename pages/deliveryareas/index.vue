@@ -3,12 +3,12 @@
     <v-container class="my-5" fluid>
       <v-data-table
         :headers="headers"
-        :items="siteProviders"
+        :items="deliveryAreas"
         class="elevation-1"
       >
         <template v-slot:top>
           <v-toolbar flat color="white">
-            <v-toolbar-title>Liste des Fournisseurs</v-toolbar-title>
+            <v-toolbar-title>Liste des Zones de livraison</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
 
@@ -23,44 +23,29 @@
                     right
                     v-on="on"
                   >
-                    Ajouter un Fournisseur</v-btn
+                    Ajouter une zone de livraison</v-btn
                   >
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="headline">Creer un Fournisseur</span>
+                    <span class="headline">Creer une zone de livraison</span>
                   </v-card-title>
                   <v-card-text>
                     <v-container>
                       <v-row>
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field
-                            label="Nom Societe*"
+                            label="Nom de la zone*"
                             required
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field
-                            label="Nom Fournisseur*"
+                            label="Nombre d Etage*"
                             required
                           ></v-text-field>
                         </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field
-                            label="Adresse*"
-                            required
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                          <v-text-field label="Email*" required></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                          <v-text-field
-                            label="Contacts*"
-                            required
-                          ></v-text-field>
-                        </v-col>
-
+                        <!-- chantier a affecter selon la liste des chantiers deja enregistres-->
                         <v-col cols="12">
                           <v-autocomplete
                             :items="constructionSites"
@@ -78,6 +63,30 @@
                               <v-list-item-content>
                                 <v-list-item-title
                                   v-html="data.item.siteName"
+                                ></v-list-item-title>
+                              </v-list-item-content>
+                            </template>
+                          </v-autocomplete>
+                        </v-col>
+
+                        <!-- Materiel a affecter selon la liste des chantiers deja enregistres-->
+                        <v-col cols="12">
+                          <v-autocomplete
+                            :items="siteMaterials"
+                            label="Selectionner les moyens pour le chantier"
+                            item-text="name"
+                            item-value="name"
+                            multiple
+                          >
+                            <template v-slot:selection="data">
+                              <template v-if="typeof data.item !== 'object'">
+                                <v-list-item-content
+                                  v-text="data.item"
+                                ></v-list-item-content>
+                              </template>
+                              <v-list-item-content>
+                                <v-list-item-title
+                                  v-html="data.item.name"
                                 ></v-list-item-title>
                               </v-list-item-content>
                             </template>
@@ -134,16 +143,17 @@ export default {
 
     headers: [
       {
-        text: 'Societe',
+        text: 'Nom Equipement',
         align: 'start',
         sortable: false,
-        value: 'compagnyName'
+        value: 'name'
       },
-      { text: 'Nom Fournisseurs', value: 'providerName' },
-      { text: 'Adresse', value: 'address' },
-      { text: 'Email', value: 'email' },
-      { text: 'Contacts', value: 'contacts' },
-      { text: 'Actif', value: 'enabled' },
+      { text: 'Nombre etage', value: 'floornumber' },
+      { text: 'Nom de Etage', value: 'floorname' },
+      { text: 'Materiel Obligatoire', value: 'defaultmaterials' },
+      { text: 'Chantier attache', value: 'affectedconstructionsite' },
+
+      { text: 'Actif', value: 'active' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
 
@@ -162,6 +172,9 @@ export default {
     },
     siteMaterials() {
       return this.$store.state.siteMaterials
+    },
+    deliveryAreas() {
+      return this.$store.state.deliveryAreas
     }
   }
 }
