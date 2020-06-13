@@ -27,6 +27,8 @@ export default {
       })
     }
   },
+
+  /// ////////////// DeliveryAreas ///////////
   // Load all DeliveryAreas
   loadDeliveryAreas(state) {
     return state.deliveryAreas
@@ -46,6 +48,15 @@ export default {
         return deliveryArea.affectedconstructionsite === siteSelection
       })
     }
+  },
+  loadDeliveryAreaById: (state) => (id) => {
+    return state.deliveryAreas.find((deliveryArea) => deliveryArea.id === id)
+  },
+  loadDeliveryAreaByCsName: (state) => (name) => {
+    // filtered by construction site name
+    return state.deliveryAreas.find(
+      (deliveryArea) => deliveryArea.affectedconstructionsite === name
+    )
   },
   loadSiteProviders(state) {
     return state.siteProviders

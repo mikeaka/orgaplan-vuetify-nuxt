@@ -214,14 +214,14 @@ export default {
     ]
   }),
   computed: {
-    // formTitle() {
-    //   return this.editedIndex === -1
-    //     ? 'Creer une zone de livraison'
-    //     : 'Editer une zone de livraison'
-    // },
-    // formButton() {
-    //   return this.editedIndex === -1 ? 'Ajouter' : 'Sauver'
-    // },
+    formTitle() {
+      return this.editedIndex === -1
+        ? 'Creer une zone de livraison'
+        : 'Editer une zone de livraison'
+    },
+    formButton() {
+      return this.editedIndex === -1 ? 'Ajouter' : 'Sauver'
+    },
     formIsValid() {
       return (
         this.editedDeliveryArea.name !== '' &&
