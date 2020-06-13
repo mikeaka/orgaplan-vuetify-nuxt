@@ -2,6 +2,7 @@
   <div>
     <v-container class="my-5" fluid>
       <v-data-table
+        :id="deliveryAreas.id"
         :headers="headers"
         :items="deliveryAreas"
         class="elevation-1"
@@ -11,24 +12,15 @@
             <v-toolbar-title>Liste des Zones de livraison</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-
+            <template>
+              <v-spacer></v-spacer>
+              <AddNewDeliveryArea />
+            </template>
             <v-row justify="center">
               <v-dialog v-model="dialog" persistent max-width="700px">
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    class="mb-2"
-                    outlined
-                    color="primary"
-                    dark
-                    right
-                    v-on="on"
-                  >
-                    Ajouter une zone de livraison</v-btn
-                  >
-                </template>
                 <v-card>
                   <v-card-title>
-                    <span class="headline">{{ formTitle }}</span>
+                    <span class="headline">Editer la zone de livraison</span>
                   </v-card-title>
                   <v-card-text>
                     <form ref="form" @submit.prevent="addDeliveryArea">
@@ -131,12 +123,13 @@
                     <v-btn color="blue darken-1" text @click="close()"
                       >Close</v-btn
                     >
+
                     <v-btn
                       color="blue darken-1"
                       text
                       :disabled="!formIsValid"
                       type="submit"
-                      @click="addDeliveryArea()"
+                      @click="onSaveChanges()"
                       >{{ formButton }}</v-btn
                     >
                   </v-card-actions>
@@ -154,6 +147,7 @@
             @click="editDeliveryArea(item)"
             >edit</v-icon
           >
+
           <v-icon small color="red" @click="deleteDeliveryArea(item)"
             >delete</v-icon
           >
@@ -164,9 +158,12 @@
 </template>
 
 <script>
+import AddNewDeliveryArea from './add'
 export default {
   name: 'DeliveryAreas',
-
+  components: {
+    AddNewDeliveryArea
+  },
   data: () => ({
     dialog: false,
 
@@ -190,6 +187,7 @@ export default {
     // used to edit delivery area
     editedIndex: -1,
     editedDeliveryArea: {
+      id: '',
       name: '',
       floornumber: '',
       floorname: '',
@@ -216,14 +214,14 @@ export default {
     ]
   }),
   computed: {
-    formTitle() {
-      return this.editedIndex === -1
-        ? 'Creer une zone de livraison'
-        : 'Editer une zone de livraison'
-    },
-    formButton() {
-      return this.editedIndex === -1 ? 'Ajouter' : 'Sauver'
-    },
+    // formTitle() {
+    //   return this.editedIndex === -1
+    //     ? 'Creer une zone de livraison'
+    //     : 'Editer une zone de livraison'
+    // },
+    // formButton() {
+    //   return this.editedIndex === -1 ? 'Ajouter' : 'Sauver'
+    // },
     formIsValid() {
       return (
         this.editedDeliveryArea.name !== '' &&
@@ -239,13 +237,13 @@ export default {
     //   return this.$store.state.siteProviders
     // },
     constructionSites() {
-      return this.$store.state.constructionSites
+      return this.$store.getters.loadConstructionSites
     },
     siteMaterials() {
-      return this.$store.state.siteMaterials
+      return this.$store.getters.loadSiteMaterials
     },
     deliveryAreas() {
-      return this.$store.state.deliveryAreas
+      return this.$store.getters.loadDeliveryAreas
     }
   },
 
@@ -256,30 +254,44 @@ export default {
   },
 
   methods: {
-    reset() {
-      this.$refs.form.reset()
-    },
-    addDeliveryArea() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.deliveryAreas[this.editedIndex], this.deliveryAreas)
-      } else {
-        const deliveryAreaData = {
-          name: this.editedDeliveryArea.name,
-          floornumber: this.editedDeliveryArea.floornumber,
-          floorname: this.editedDeliveryArea.floorname,
-          defaultmaterials: this.editedDeliveryArea.defaultmaterials,
-          affectedconstructionsite: this.editedDeliveryArea
-            .affectedconstructionsite,
-          active: this.editedDeliveryArea.active
-        }
-        this.$store.dispatch('addDeliveryArea', deliveryAreaData)
-        this.dialog = false
-      }
-    },
+    // reset() {
+    //   this.$refs.form.reset()
+    // },
+    // addDeliveryArea() {
+    //   if (this.editedIndex > -1) {
+    //     Object.assign(this.deliveryAreas[this.editedIndex], this.deliveryAreas)
+    //     this.dialog = false
+    //   } else {
+    //     const deliveryAreaData = {
+    //       name: this.editedDeliveryArea.name,
+    //       floornumber: this.editedDeliveryArea.floornumber,
+    //       floorname: this.editedDeliveryArea.floorname,
+    //       defaultmaterials: this.editedDeliveryArea.defaultmaterials,
+    //       affectedconstructionsite: this.editedDeliveryArea
+    //         .affectedconstructionsite,
+    //       active: this.editedDeliveryArea.active
+    //     }
+    //     this.$store.dispatch('addDeliveryArea', deliveryAreaData)
+    //     this.dialog = false
+    //   }
+    // },
     editDeliveryArea(item) {
       this.editedIndex = this.deliveryAreas.indexOf(item)
       this.editedDeliveryArea = Object.assign({}, item)
       this.dialog = true
+    },
+    onSaveChanges() {
+      this.dialog = false
+      this.$store.dispatch('updateDeliveryAreaData', {
+        id: this.editedDeliveryArea.id,
+        name: this.editedDeliveryArea.name,
+        floornumber: this.editedDeliveryArea.floornumber,
+        floorname: this.editedDeliveryArea.floorname,
+        defaultmaterials: this.editedDeliveryArea.defaultmaterials,
+        affectedconstructionsite: this.editedDeliveryArea
+          .affectedconstructionsite,
+        active: this.editedDeliveryArea.active
+      })
     },
 
     deleteDeliveryArea(item) {

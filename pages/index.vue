@@ -44,7 +44,7 @@
               >Aire de Livraison</v-card-title
             >
             <v-list-item
-              v-for="deliveryArea in deliveryAreas"
+              v-for="deliveryArea in finddeliveryAreas"
               :key="deliveryArea.id"
             >
               <v-btn
@@ -121,9 +121,33 @@ export default {
     },
     siteMaterials() {
       return this.$store.state.siteMaterials
+    },
+    // filteredSiteDeliveryArea(siteSelection) {
+    //   return this.deliveryAreas.filter((siteDeliveryArea) => {
+    //     return siteDeliveryArea.affectedconstructionsite.valueOf(siteSelection)
+    //   })
+    // },
+    filteredSiteDeliveryArea(state, siteSelection) {
+      return (siteDASelection) => {
+        return state.deliveryAreas.find((siteDeliveryArea) => {
+          return siteDeliveryArea.affectedconstructionsite === siteSelection
+        })
+      }
+    },
+    finddeliveryAreas(siteSelection) {
+      return this.$store.state.deliveryAreas.find((site) => {
+        return (filteredAreas) => {
+          return filteredAreas.affectedconstructionsite === siteSelection
+        }
+      })
+    },
+    filteredAreas(getters, siteSelection) {
+      return getters.loadFilteredDeliveryArea.name
     }
   },
-  mounted() {},
+  mounted() {
+    return this.filteredSiteDeliveryArea
+  },
 
   methods: {}
 }
