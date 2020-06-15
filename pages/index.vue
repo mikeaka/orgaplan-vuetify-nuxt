@@ -22,10 +22,9 @@
         <v-flex>
           <p v-if="siteSelection">
             Vous avez selectionner
-
-            <strong class="red--text text--lighten-1">
-              {{ siteSelection }}
-            </strong>
+            <strong class="red--text text--lighten-1">{{
+              siteSelection
+            }}</strong>
           </p>
           <p v-if="!siteSelection">Veuillez choisir un chantier</p>
         </v-flex>
@@ -44,7 +43,7 @@
               >Aire de Livraison</v-card-title
             >
             <v-list-item
-              v-for="deliveryArea in filteredActiveDeliveryArea"
+              v-for="deliveryArea in filtered"
               :key="deliveryArea.id"
             >
               <v-btn
@@ -103,32 +102,46 @@
 </style>
 
 <script>
+// import { mapState, mapMutations, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Home',
   props: {},
   data() {
     return {
-      siteSelection: ''
+      siteSelection: '',
+      filtered: ''
     }
   },
 
   computed: {
-    deliveryAreas() {
-      return this.$store.state.deliveryAreas
-    },
-    constructionSites() {
-      return this.$store.state.constructionSites
-    },
-    siteMaterials() {
-      return this.$store.state.siteMaterials
-    },
-    filteredActiveDeliveryArea() {
-      return this.deliveryAreas.find((deliveryArea) => {
-        return deliveryArea.affectedconstructionsite.valueOf(this.siteSelection)
-      })
+    ...mapGetters({
+      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      // doneCount: 'doneTodosCount'
+      deliveryAreas: 'loadDeliveryAreas',
+      constructionSites: 'loadConstructionSites',
+      siteMaterials: 'loadSiteMaterials'
+    }),
+
+    deliveryAreaByCsName(siteSelection) {
+      return this.$store.getters.getTodoById
     }
+
+    // deliveryAreas() {
+    //   return this.$store.getters.loadDeliveryAreas
+    // },
+    // constructionSites() {
+    //   return this.$store.getters.loadConstructionSites
+    // },
+    // siteMaterials() {
+    //   return this.$store.getters.loadSiteMaterials
+    // }
   },
-  mounted() {},
+  mounted() {
+    this.filtered = this.deliveryAreaByCsName(this.siteSelection)
+    console.log(this.filtered)
+  },
 
   methods: {}
 }

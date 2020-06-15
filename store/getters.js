@@ -20,7 +20,7 @@ export default {
     return state.siteMaterials
   },
   // load one SiteMaterials using ID
-  loadSiteMaterial(state) {
+  loadSiteMaterialById(state) {
     return (siteMaterialId) => {
       return state.loadSiteMaterials.find((siteMaterial) => {
         return siteMaterial.id === siteMaterialId
@@ -42,20 +42,26 @@ export default {
     }
   },
   // load one DeliveryAreas using ID
-  loadFilteredDeliveryArea(state) {
-    return (siteSelection) => {
-      return state.loadDeliveryAreas.find((deliveryArea) => {
-        return deliveryArea.affectedconstructionsite === siteSelection
-      })
-    }
-  },
+  // loadFilteredDeliveryArea(state) {
+  //   return (filtered) => {
+  //     return state.loadDeliveryAreas.find((deliveryArea) => {
+  //       return (filtered =
+  //         deliveryArea.affectedconstructionsite === 'Chantier1')
+  //     })
+  //   }
+  // },
   loadDeliveryAreaById: (state) => (id) => {
     return state.deliveryAreas.find((deliveryArea) => deliveryArea.id === id)
   },
-  loadDeliveryAreaByCsName: (state) => (name) => {
+  loadDeliveryAreaByCsName: (state) => (siteSelection) => {
     // filtered by construction site name
     return state.deliveryAreas.find(
-      (deliveryArea) => deliveryArea.affectedconstructionsite === name
+      (deliveryArea) => deliveryArea.affectedconstructionsite === siteSelection
+    )
+  },
+  getTodoById: (state) => (id) => {
+    return state.deliveryAreas.find(
+      (deliveryArea) => deliveryArea.affectedconstructionsite === 'Chantier1'
     )
   },
   loadSiteProviders(state) {
