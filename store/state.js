@@ -1,7 +1,7 @@
 export default () => ({
   deliveryAreas: [
     {
-      id: 'sssss',
+      id: 'sssdss',
       name: 'Auto-Sous Sol 1',
       floornumber: '2',
       floorname: ['Etage1', 'Etage2'],
@@ -28,6 +28,16 @@ export default () => ({
       defaultmaterials: 'LIFT 02',
       additionalmaterial: 'Chariot Elevateur T1 RDC',
       affectedconstructionsite: 'Chantier3',
+      active: true
+    },
+    {
+      id: 'wwsdexvww',
+      name: 'Centrale T3:T4',
+      floornumber: '2',
+      floorname: ['Etage1', 'Etage2'],
+      defaultmaterials: 'LIFT 02',
+      additionalmaterial: 'Chariot Elevateur T1 RDC',
+      affectedconstructionsite: 'Chantier1',
       active: true
     }
   ],

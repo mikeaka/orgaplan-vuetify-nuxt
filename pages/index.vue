@@ -43,7 +43,7 @@
               >Aire de Livraison</v-card-title
             >
             <v-list-item
-              v-for="deliveryArea in filtered"
+              v-for="deliveryArea in filteredDeliveryAreas"
               :key="deliveryArea.id"
             >
               <v-btn
@@ -60,7 +60,10 @@
             <v-card-title class="text-xs-center justify-center"
               >Materiels Disponible</v-card-title
             >
-            <v-list-item v-for="materiel in siteMaterials" :key="materiel.id">
+            <v-list-item
+              v-for="materiel in filteredMaterials"
+              :key="materiel.id"
+            >
               <v-btn
                 block
                 color="primary"
@@ -121,13 +124,20 @@ export default {
       // doneCount: 'doneTodosCount'
       deliveryAreas: 'loadDeliveryAreas',
       constructionSites: 'loadConstructionSites',
-      siteMaterials: 'loadSiteMaterials'
+      siteMaterials: 'loadSiteMaterials',
+      loadDeliveryAreasByCsName: 'loadDeliveryAreasByCsName',
+      loadSiteMaterialsByCsName: 'loadSiteMaterialsByCsName'
     }),
 
-    deliveryAreaByCsName(siteSelection) {
-      return this.$store.getters.getTodoById
+    // deliveryAreaByCsName() {
+    //   return this.$store.getters.loadDeliveryAreaByCsName
+    // },
+    filteredDeliveryAreas() {
+      return this.loadDeliveryAreasByCsName(this.siteSelection)
+    },
+    filteredMaterials() {
+      return this.loadSiteMaterialsByCsName(this.siteSelection)
     }
-
     // deliveryAreas() {
     //   return this.$store.getters.loadDeliveryAreas
     // },
@@ -139,8 +149,8 @@ export default {
     // }
   },
   mounted() {
-    this.filtered = this.deliveryAreaByCsName(this.siteSelection)
-    console.log(this.filtered)
+    // this.filtered = this.filteredAreas
+    // console.log(this.filtered)
   },
 
   methods: {}

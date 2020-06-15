@@ -1,77 +1,66 @@
 export default {
+  /// ////////////// Construction Sites ///////////
   // Load all Construction Sites
   loadConstructionSites(state) {
     return state.constructionSites
   },
   // load one construction site using ID
-  loadConstructionSite(state) {
-    return (constructionSiteId) => {
-      return state.loadConstructionSites.find((constructionSite) => {
-        return constructionSite.id === constructionSiteId
-      })
-    }
+  loadConstructionSiteById: (state) => (id) => {
+    return state.loadConstructionSites.find(
+      (constructionSite) => constructionSite.id === id
+    )
   },
   // only load the first Construction site
   featuredConstructionSite(state, getters) {
     return getters.loadConstructionSites.slice(0, 5)
   },
+  /// ////////////// Materials By Construction Site ///////////
   // Load all SiteMaterials
   loadSiteMaterials(state) {
     return state.siteMaterials
   },
   // load one SiteMaterials using ID
-  loadSiteMaterialById(state) {
-    return (siteMaterialId) => {
-      return state.loadSiteMaterials.find((siteMaterial) => {
-        return siteMaterial.id === siteMaterialId
-      })
-    }
+  loadSiteMaterialById: (state) => (id) => {
+    return state.loadSiteMaterials.find(
+      (siteMaterial) => siteMaterial.id === id
+    )
   },
-
+  // filtered All SiteMaterials by construction site name
+  loadSiteMaterialsByCsName: (state) => (siteSelection) => {
+    return state.siteMaterials.filter(
+      (Material) => Material.affectedconstructionsite === siteSelection
+    )
+  },
   /// ////////////// DeliveryAreas ///////////
   // Load all DeliveryAreas
   loadDeliveryAreas(state) {
     return state.deliveryAreas
   },
   // load one DeliveryAreas using ID
-  loadDeliveryArea(state) {
-    return (deliveryAreaId) => {
-      return state.loadDeliveryAreas.find((deliveryArea) => {
-        return deliveryArea.id === deliveryAreaId
-      })
-    }
-  },
-  // load one DeliveryAreas using ID
-  // loadFilteredDeliveryArea(state) {
-  //   return (filtered) => {
-  //     return state.loadDeliveryAreas.find((deliveryArea) => {
-  //       return (filtered =
-  //         deliveryArea.affectedconstructionsite === 'Chantier1')
-  //     })
-  //   }
-  // },
   loadDeliveryAreaById: (state) => (id) => {
     return state.deliveryAreas.find((deliveryArea) => deliveryArea.id === id)
   },
-  loadDeliveryAreaByCsName: (state) => (siteSelection) => {
-    // filtered by construction site name
+  // filtered one DeliveryAreas by construction site name
+  loadOneDeliveryAreaByCsName: (state) => (siteSelection) => {
     return state.deliveryAreas.find(
-      (deliveryArea) => deliveryArea.affectedconstructionsite === siteSelection
+      (Area) => Area.affectedconstructionsite === siteSelection
     )
   },
-  getTodoById: (state) => (id) => {
-    return state.deliveryAreas.find(
-      (deliveryArea) => deliveryArea.affectedconstructionsite === 'Chantier1'
+  // filtered All DeliveryAreas by construction site name
+  loadDeliveryAreasByCsName: (state) => (siteSelection) => {
+    return state.deliveryAreas.filter(
+      (Area) => Area.affectedconstructionsite === siteSelection
     )
   },
+
+  /// ////////////// Site Providers ///////////
   loadSiteProviders(state) {
     return state.siteProviders
   },
-  loadSiteProvider(state) {
-    return (siteProviderId) => {
-      return state.loadSiteProviders.find((siteProvider) => {
-        return siteProvider.id === siteProviderId
-      })
-    }
+
+  loadSiteProvider: (state) => (id) => {
+    return state.loadSiteProviders.find(
+      (siteProvider) => siteProvider.id === id
+    )
   }
 }
