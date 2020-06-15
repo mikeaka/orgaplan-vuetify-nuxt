@@ -2,7 +2,6 @@
   <v-dialog v-model="Adddialog" width="700px" persistent>
     <template v-slot:activator="{ on }">
       <v-btn outlined color="primary" dark right v-on="on">
-        <v-icon>edit</v-icon>
         Ajouter une zone de livraison
       </v-btn>
     </template>
@@ -121,6 +120,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'AddNewDeliveryArea',
   data() {
@@ -152,6 +153,13 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      // doneCount: 'doneTodosCount'
+      deliveryAreas: 'loadDeliveryAreas',
+      constructionSites: 'loadConstructionSites',
+      siteMaterials: 'loadSiteMaterials'
+    }),
     formIsValid() {
       return (
         this.addNewDeliveryArea.name !== '' &&
@@ -161,16 +169,16 @@ export default {
         this.addNewDeliveryArea.affectedconstructionsite !== '' &&
         this.addNewDeliveryArea.active !== ''
       )
-    },
-    constructionSites() {
-      return this.$store.getters.loadConstructionSites
-    },
-    siteMaterials() {
-      return this.$store.getters.loadSiteMaterials
-    },
-    deliveryAreas() {
-      return this.$store.getters.loadDeliveryAreas
     }
+    // constructionSites() {
+    //   return this.$store.getters.loadConstructionSites
+    // },
+    // siteMaterials() {
+    //   return this.$store.getters.loadSiteMaterials
+    // },
+    // deliveryAreas() {
+    //   return this.$store.getters.loadDeliveryAreas
+    // }
   },
   watch: {
     Adddialog(val) {

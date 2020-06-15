@@ -34,5 +34,8 @@ export default {
     if (payload.active) {
       deliveryarea.active = payload.active
     }
+  },
+  setLoading(state, payload) {
+    state.loading = payload
   }
 }

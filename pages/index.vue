@@ -113,8 +113,7 @@ export default {
   props: {},
   data() {
     return {
-      siteSelection: '',
-      filtered: ''
+      siteSelection: ''
     }
   },
 

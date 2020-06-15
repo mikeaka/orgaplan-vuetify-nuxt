@@ -158,7 +158,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import AddNewDeliveryArea from './add'
+
 export default {
   name: 'DeliveryAreas',
   components: {
@@ -214,11 +216,21 @@ export default {
     ]
   }),
   computed: {
-    formTitle() {
-      return this.editedIndex === -1
-        ? 'Creer une zone de livraison'
-        : 'Editer une zone de livraison'
-    },
+    ...mapGetters({
+      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      // doneCount: 'doneTodosCount'
+      deliveryAreas: 'loadDeliveryAreas',
+      constructionSites: 'loadConstructionSites',
+      siteMaterials: 'loadSiteMaterials',
+      loadDeliveryAreasByCsName: 'loadDeliveryAreasByCsName',
+      loadSiteMaterialsByCsName: 'loadSiteMaterialsByCsName'
+    }),
+
+    // formTitle() {
+    //   return this.editedIndex === -1
+    //     ? 'Creer une zone de livraison'
+    //     : 'Editer une zone de livraison'
+    // },
     formButton() {
       return this.editedIndex === -1 ? 'Ajouter' : 'Sauver'
     },
@@ -231,20 +243,20 @@ export default {
         this.editedDeliveryArea.affectedconstructionsite !== '' &&
         this.editedDeliveryArea.active !== ''
       )
-    },
+    }
 
     // siteProviders() {
     //   return this.$store.state.siteProviders
     // },
-    constructionSites() {
-      return this.$store.getters.loadConstructionSites
-    },
-    siteMaterials() {
-      return this.$store.getters.loadSiteMaterials
-    },
-    deliveryAreas() {
-      return this.$store.getters.loadDeliveryAreas
-    }
+    // constructionSites() {
+    //   return this.$store.getters.loadConstructionSites
+    // },
+    // siteMaterials() {
+    //   return this.$store.getters.loadSiteMaterials
+    // },
+    // deliveryAreas() {
+    //   return this.$store.getters.loadDeliveryAreas
+    // }
   },
 
   watch: {
@@ -276,6 +288,7 @@ export default {
     //   }
     // },
     editDeliveryArea(item) {
+      console.log(item)
       this.editedIndex = this.deliveryAreas.indexOf(item)
       this.editedDeliveryArea = Object.assign({}, item)
       this.dialog = true

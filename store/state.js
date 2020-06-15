@@ -1,4 +1,5 @@
 export default () => ({
+  loading: false,
   deliveryAreas: [
     {
       id: 'sssdss',
@@ -51,7 +52,9 @@ export default () => ({
       status: 'en-cours',
       location: 'Grigny',
       projectDuration: '1 an',
-      responsible: 'Georges'
+      responsible: 'Georges',
+      address: '74 rue defour',
+      postalCode: '94050'
     },
     {
       id: 'azertysdsdqui',
@@ -62,7 +65,9 @@ export default () => ({
       status: 'en-cours',
       location: 'Paris',
       projectDuration: '3 ans',
-      responsible: 'Marc'
+      responsible: 'Marc',
+      address: '15 boulevard georges',
+      postalCode: '75012'
     },
     {
       id: 'azeqsdqxcsdqrtyui',
@@ -73,7 +78,9 @@ export default () => ({
       status: 'terminee',
       location: 'Montreuil',
       projectDuration: '3 ans',
-      responsible: 'John'
+      responsible: 'John',
+      address: '7 rue cabri',
+      postalCode: '94150'
     }
   ],
   siteMaterials: [

@@ -62,5 +62,8 @@ export default {
     return state.loadSiteProviders.find(
       (siteProvider) => siteProvider.id === id
     )
+  },
+  loading(state) {
+    return state.loading
   }
 }
