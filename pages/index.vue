@@ -1,5 +1,5 @@
 <template>
-  <v-container class="grey lighten-5 v-layout" fluid>
+  <v-container class="grey lighten-5 v-layout v-content__wrap" fluid>
     <v-layout row justify-center>
       <div class="text-center ma-5">
         <v-menu offset-y>
@@ -101,6 +101,18 @@
   height: 5rem;
   align-items: center;
   justify-content: center;
+  position: absolute;
+}
+.v-content {
+  background-image: url('https://www.xmple.com/wallpaper/blue-gradient-grey-linear-1920x1080-c2-add8e6-c0c0c0-a-75-f-14.svg')
+    no-repeat center center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  transform: scale(1.1);
 }
 </style>
 

@@ -9,6 +9,7 @@ export default () => ({
       defaultmaterials: 'LIFT 01',
       additionalmaterial: 'Chariot Elevateur T1 RDC',
       affectedconstructionsite: 'Chantier1',
+      constructionsiteId: 'azertyui',
       active: true
     },
     {
@@ -19,6 +20,7 @@ export default () => ({
       defaultmaterials: 'LIFT 01',
       additionalmaterial: 'Chariot Elevateur T1 RDC',
       affectedconstructionsite: 'Chantier2',
+      constructionsiteId: 'azertysdsdqui',
       active: true
     },
     {
@@ -29,6 +31,7 @@ export default () => ({
       defaultmaterials: 'LIFT 02',
       additionalmaterial: 'Chariot Elevateur T1 RDC',
       affectedconstructionsite: 'Chantier3',
+      constructionsiteId: 'azertysdsdqui',
       active: true
     },
     {
@@ -39,6 +42,7 @@ export default () => ({
       defaultmaterials: 'LIFT 02',
       additionalmaterial: 'Chariot Elevateur T1 RDC',
       affectedconstructionsite: 'Chantier1',
+      constructionsiteId: 'azertyui',
       active: true
     }
   ],
@@ -89,6 +93,7 @@ export default () => ({
       name: 'LIFT 01',
       deliveryarea: 'Centrale T1:T2',
       affectedconstructionsite: 'Chantier3',
+      constructionsiteId: 'azeqsdqxcsdqrtyui',
       active: true
     },
     {
@@ -96,6 +101,7 @@ export default () => ({
       name: 'LIFT 02',
       deliveryarea: 'Auto-Sous Sol 1',
       affectedconstructionsite: 'Chantier1',
+      constructionsiteId: 'azertyui',
       active: true
     },
     {
@@ -103,6 +109,7 @@ export default () => ({
       name: 'Chariot Elevateur T1 RDC',
       deliveryarea: 'Auto-Sous Sol 1',
       affectedconstructionsite: 'Chantier1',
+      constructionsiteId: 'azertyui',
       active: true
     },
     {
@@ -110,6 +117,7 @@ export default () => ({
       name: 'Chariot Elevateur T1',
       deliveryarea: 'Auto-Sous Sol 2',
       affectedconstructionsite: 'Chantier2',
+      constructionsiteId: 'azertysdsdqui',
       active: true
     },
     {
@@ -117,6 +125,7 @@ export default () => ({
       name: 'Grue T1',
       deliveryarea: 'Auto-Sous Sol 2',
       affectedconstructionsite: 'Chantier2',
+      constructionsiteId: 'azertysdsdqui',
       active: true
     },
     {
@@ -124,6 +133,7 @@ export default () => ({
       name: 'Grue T3',
       deliveryarea: 'Auto-Sous Sol 1',
       affectedconstructionsite: 'Chantier1',
+      constructionsiteId: 'azertyui',
       active: true
     }
   ],
@@ -135,6 +145,7 @@ export default () => ({
       address: '92 Pont de Gennevilliers, Clichy, France',
       email: 'lchartier@cuisine3c.com',
       contacts: '0102020303',
+      constructionsiteId: 'azertyui',
       enabled: true
     },
     {
@@ -144,6 +155,7 @@ export default () => ({
       address: '69 rue Epluche, PierreLaye, France',
       email: 'jeanpierre@orange.com',
       contacts: '0102402930',
+      constructionsiteId: 'azeqsdqxcsdqrtyui',
       enabled: true
     },
     {
@@ -153,6 +165,7 @@ export default () => ({
       address: '54 Zone de Gennevilliers, wolfgantzen, France',
       email: 'qsdr@zoedf.com',
       contacts: '0165372687',
+      constructionsiteId: 'azertyui',
       enabled: true
     },
     {
@@ -162,6 +175,7 @@ export default () => ({
       address: 'Saint-Ouen, France',
       email: 'saintouen@gmail.com',
       contacts: '010204527',
+      constructionsiteId: 'azeqsdqxcsdqrtyui',
       enabled: true
     },
     {
@@ -171,6 +185,7 @@ export default () => ({
       address: 'chemiller zone NA, Clichy, France',
       email: 'arbonis@orange.com',
       contacts: '010205467892',
+      constructionsiteId: 'azertysdsdqui',
       enabled: true
     },
     {
@@ -180,39 +195,85 @@ export default () => ({
       address: 'chemiller zone NA, Clichy, France',
       email: 'arbsdonis@orange.com',
       contacts: '010205467892',
+      constructionsiteId: 'azertysdsdqui',
       enabled: true
     }
   ],
   compagny: [
     {
-      id: 'asfxzada',
+      id: 'asjkjkzada',
       name: 'Microsoft',
       address: '53 rue salvador',
       postalcode: '75010',
       email: 'microsoft@microsoft.com',
       phonenumber: '0135026578',
       affectedconstructionsite: 'Chantier3',
+      constructionsiteId: 'azeqsdqxcsdqrtyui',
       active: true
     },
     {
-      id: 'asfxzada',
+      id: 'asfxzaddda',
       name: 'Google',
       address: '75 rue dido',
       postalcode: '94050',
       email: 'google@google.com',
       phonenumber: '0134526578',
       affectedconstructionsite: 'Chantier1',
+      constructionsiteId: 'azertyui',
       active: true
     },
     {
-      id: 'asfxzada',
+      id: 'sadcada',
       name: 'vNext',
       address: '32 rue tolbiac',
       postalcode: '75020',
       email: 'vnext@vnext.com',
       phonenumber: '01752367895',
       affectedconstructionsite: 'Chantier2',
+      constructionsiteId: 'azertysdsdqui',
       active: false
+    }
+  ],
+  lockers: [
+    {
+      id: '12345',
+      name: 'Casier1',
+      availability: 'occupe',
+      occupiedBy: 'Jean',
+      occupiedByCompagnyId: 'asfxzada',
+      constructionsiteId: 'azertyui',
+      startDate: '',
+      endDate: ''
+    },
+    {
+      id: '64578',
+      name: 'Casier2',
+      availability: 'occupe',
+      occupiedBy: 'Greg',
+      constructionsiteId: 'azeqsdqxcsdqrtyui',
+      occupiedByCompagnyId: 'sadcada',
+      startDate: '',
+      endDate: ''
+    },
+    {
+      id: '9784825',
+      name: 'Casier3',
+      availability: 'libre',
+      occupiedBy: 'Samir',
+      constructionsiteId: 'azertysdsdqui',
+      occupiedByCompagnyId: 'asfxzaddda',
+      startDate: '',
+      endDate: ''
+    },
+    {
+      id: '91254225',
+      name: 'Casier4',
+      availability: 'libre',
+      occupiedBy: 'Jacques',
+      constructionsiteId: 'azertysdsdqui',
+      occupiedByCompagnyId: 'asjkjkzada',
+      startDate: '',
+      endDate: ''
     }
   ]
 })

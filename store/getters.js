@@ -6,7 +6,7 @@ export default {
   },
   // load one construction site using ID
   loadConstructionSiteById: (state) => (id) => {
-    return state.loadConstructionSites.find(
+    return state.constructionSites.find(
       (constructionSite) => constructionSite.id === id
     )
   },
@@ -31,6 +31,12 @@ export default {
       (Material) => Material.affectedconstructionsite === siteSelection
     )
   },
+  // filtered All SiteMaterials by construction Id
+  loadSiteMaterialsByCsId: (state) => (id) => {
+    return state.siteMaterials.filter(
+      (Material) => Material.constructionsiteId === id
+    )
+  },
   /// ////////////// DeliveryAreas ///////////
   // Load all DeliveryAreas
   loadDeliveryAreas(state) {
@@ -52,17 +58,52 @@ export default {
       (Area) => Area.affectedconstructionsite === siteSelection
     )
   },
+  // filtered All DeliveryAreas by construction Id
+  loadDeliveryAreasByCsId: (state) => (id) => {
+    return state.deliveryAreas.filter((Area) => Area.constructionsiteId === id)
+  },
+
+  /// ////////////// Casier ///////////
+  // Load all casiers
+  loadAllLockers(state) {
+    return state.lockers
+  },
+  // filtered All casiers by construction Id
+  loadLockersByCsId: (state) => (id) => {
+    return state.lockers.filter((locker) => locker.constructionsiteId === id)
+  },
+  // filtered one Locker by construction site name
+  loadOneLockersCsName: (state) => (siteSelection) => {
+    return state.lockers.find(
+      (locker) => locker.affectedconstructionsite === siteSelection
+    )
+  },
 
   /// ////////////// Site Providers ///////////
   loadSiteProviders(state) {
     return state.siteProviders
   },
 
+  // filtered All casiers by construction Id
   loadSiteProvider: (state) => (id) => {
-    return state.loadSiteProviders.find(
-      (siteProvider) => siteProvider.id === id
+    return state.siteProviders.filter(
+      (provider) => provider.constructionsiteId === id
     )
   },
+
+  /// ////////////// Compagny ///////////
+  // Load all Compagny
+  loadAllCompagny(state) {
+    return state.compagny
+  },
+
+  // filtered All compagny by construction Id
+  loadCompagnyByCsName: (state) => (id) => {
+    return state.compagny.filter(
+      (compagny) => compagny.constructionsiteId === id
+    )
+  },
+
   loading(state) {
     return state.loading
   }

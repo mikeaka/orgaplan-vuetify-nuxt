@@ -1,21 +1,14 @@
 <template>
   <v-container class="my-5" flex>
-    <v-layout v-if="isLoading" row wrap>
-      <v-flex xs12 class="text-xs-center">
-        <v-progress-circular
-          indeterminate
-          class="promary--text"
-          :width="7"
-          :size="70"
-        >
-        </v-progress-circular>
-      </v-flex>
-    </v-layout>
     <v-card
       v-for="chantier in constructionSites"
-      v-else
       :key="chantier.id"
       flat
+      router
+      :to="{
+        name: 'constructionsites-id-singlesite',
+        params: { id: chantier.id }
+      }"
     >
       <v-layout row wrap :class="`pa-3 chantier ${chantier.status}`">
         <v-flex xs3 md3>
@@ -47,7 +40,7 @@
         <v-flex>
           <div class="caption grey--text">Actions</div>
 
-          <EditConstructionSite :constructionsites="constructionSites" />
+          <EditConstructionSite :chantier="`${chantier.id}`" />
         </v-flex>
       </v-layout>
       <v-divider></v-divider>
@@ -75,17 +68,22 @@ export default {
     EditConstructionSite
   },
 
-  data: () => ({}),
+  data: () => ({
+    constructionSite: {
+      siteName: '',
+      location: '',
+      projectDuration: '',
+      responsible: ''
+    }
+  }),
   computed: {
     ...mapGetters({
       // map `this.doneCount` to `this.$store.getters.doneTodosCount`
       // doneCount: 'doneTodosCount'
       constructionSites: 'loadConstructionSites'
-    }),
-    isLoading() {
-      return this.$store.getters.loading
-    }
-  }
+    })
+  },
+  methods: {}
 }
 </script>
 
