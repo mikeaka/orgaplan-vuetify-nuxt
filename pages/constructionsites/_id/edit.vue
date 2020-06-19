@@ -35,13 +35,15 @@
         </v-stepper-header>
 
         <v-stepper-items>
+          {{ chantier }}
+          {{ editedConstructionSite.chantierid }}
+          {{ siteName }}
           <v-stepper-content step="1">
             <v-card class="mb-7" color="blue-grey lighten-5" height="355px">
               <v-row>
-                <p>{{ chantier }}</p>
                 <v-col cols="12" sm="6" md="4">
                   <v-text-field
-                    v-model="chantier.siteName"
+                    v-model="editedConstructionSite.siteName"
                     class="ml-3 mt-0 pt-1"
                     label="Nom du chantier*"
                     required
@@ -50,7 +52,7 @@
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="chantier.address"
+                    v-model="editedConstructionSite.address"
                     class="ml-3 mt-0 pt-1"
                     label="Adresse du chantier*"
                     required
@@ -254,7 +256,7 @@ export default {
       // id: this.chantier,
       editedIndex: -1,
       editedConstructionSite: {
-        id: this.chantier.id,
+        chantierid: this.chantier.id,
         siteName: this.chantier.siteName
         // imageUrl: this.findEditedConstructionSite.imageUrl,
         // active: this.findEditedConstructionSite.active,
@@ -280,9 +282,6 @@ export default {
       siteProviders: 'loadSiteProviders',
       editConstructionSiteId: 'loadConstructionSiteById'
     }),
-    Loading() {
-      return this.$store.getters.loading
-    },
     findEditedConstructionSite() {
       return this.editConstructionSiteId(this.id)
     }

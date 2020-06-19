@@ -1,6 +1,6 @@
 <template>
   <v-app class="main-content">
-    <TheHeader />
+    <TheHeader v-if="islogged" />
     <v-content>
       <Nuxt />
     </v-content>
@@ -11,12 +11,17 @@
 * {
   box-sizing: border-box;
 }
-body {
+.body {
   font-family: 'Lato', sans-serif;
+}
+.backgroundimg {
+  background-image: url('https://www.xmple.com/wallpaper/blue-gradient-grey-linear-1920x1080-c2-add8e6-c0c0c0-a-75-f-14.svg')
+    no-repeat center center;
 }
 </style>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 import TheHeader from '~/components/TheHeader/TheHeader.vue'
 
 export default {
@@ -26,6 +31,7 @@ export default {
   data() {
     return {
       drawer: true,
+      islogged: false,
       items: [
         { icon: 'mdi-home', text: 'Home' },
         { icon: 'mdi-fire', text: 'Trending' },
@@ -67,8 +73,23 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState({
+      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      // doneCount: 'doneTodosCount'
+      usersState: 'users'
+    }),
+    ...mapGetters({
+      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      // doneCount: 'doneTodosCount'
+      loadUserByCsName: 'loadUserByCsName'
+    }),
+    userIsLoggedon() {
+      return this.loadUserByCsName(this.userName)
+    }
+  },
   head: {
-    title: 'Nuxt Vuetify Starter'
+    title: 'Orgaplan'
   }
 }
 </script>

@@ -275,5 +275,6 @@ export default () => ({
       startDate: '',
       endDate: ''
     }
-  ]
+  ],
+  users: [{ id: 'iuydsa', username: 'mike', islogged: 'true' }]
 })

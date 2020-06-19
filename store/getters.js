@@ -103,7 +103,11 @@ export default {
       (compagny) => compagny.constructionsiteId === id
     )
   },
-
+  /// ////////////// Users ///////////
+  // filtered one users by  name
+  loadUserByCsName: (state) => (username) => {
+    return state.deliveryAreas.find((user) => user.username === username)
+  },
   loading(state) {
     return state.loading
   }
