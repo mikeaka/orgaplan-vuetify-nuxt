@@ -1,3 +1,5 @@
+import firebase from 'firebase'
+
 export default {
   addDeliveryArea({ commit }, payload) {
     const deliveryArea = {
@@ -43,7 +45,24 @@ export default {
     //   commit('setLoading', false)
     // })
   },
-  signUserUp({ commit }, payload) {},
+  signUserUp({ commit }, payload) {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(payload.email, payload.password)
+      .then((user) => {
+        const newUser = {
+          id: user.uid,
+          email: user.email,
+          compagnyName: '',
+          isAdmin: '',
+          affectedCS: []
+        }
+        commit('setUser', newUser)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
   signUserIn({ commit }, payload) {
     commit('setIsLoggedIn', payload)
   }

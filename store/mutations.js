@@ -40,5 +40,8 @@ export default {
   },
   setIsLoggedIn(state, payload) {
     state.islogged = payload
+  },
+  setUser(state, payload) {
+    state.user = payload
   }
 }

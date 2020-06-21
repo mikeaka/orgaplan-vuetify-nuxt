@@ -49,6 +49,12 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify'
   ],
+  // resolve issue with firestore Function Firestore.settings() requires
+  // render: {
+  //   bundleRenderer: {
+  //     runInNewContext: false
+  //   }
+  // },
   /*
    ** Nuxt.js modules
    */

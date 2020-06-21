@@ -277,5 +277,13 @@ export default () => ({
       endDate: ''
     }
   ],
-  users: [{ id: 'iuydsa', username: 'mike' }]
+  user: [
+    {
+      id: 'iuydsa',
+      email: 'mike',
+      compagnyName: '',
+      isAdmin: 'true',
+      affectedCS: ['Chantier1', 'Chantier2']
+    }
+  ]
 })

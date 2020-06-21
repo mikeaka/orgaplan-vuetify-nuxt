@@ -16,17 +16,25 @@
                           ORGAPLAN
                         </h1>
 
-                        <v-form @submit.prevent="onSignIn">
+                        <v-form
+                          ref="form"
+                          v-model="valid"
+                          lazy-validation
+                          @submit.prevent="onSignIn"
+                        >
                           <v-text-field
                             label="Email"
                             name="Email"
                             prepend-icon="email"
+                            type="email"
+                            :rules="emailRules"
                             color="teal darken-2"
                           ></v-text-field>
                           <v-text-field
                             id="password"
                             label="mot de passe"
                             name="password"
+                            :rules="passwordRules"
                             prepend-icon="lock"
                             type="password"
                             color="teal"
@@ -62,6 +70,7 @@
                     </v-col>
                   </v-row>
                 </v-window-item>
+
                 <v-window-item :value="2">
                   <v-row class="fill-height">
                     <v-col cols="12" md="4" class="teal darken-2 mb-5">
@@ -83,19 +92,26 @@
                       </div>
                     </v-col>
                     <v-col cols="12" md="8">
-                      <v-card-text class="mt-n2">
+                      <v-card-text class="mt-n7">
                         <h1
-                          class="text--center display-2 teal--text text--darken-2"
+                          class="text--center display-2 teal--text text--darken-2 mt-2"
                         >
                           Creer un compte
                         </h1>
                         <br />
-                        <v-form @submit.prevent="onSignUp">
+                        <v-form
+                          ref="form"
+                          v-model="valid"
+                          lazy-validation
+                          @submit.prevent="onSignUp"
+                        >
                           <v-text-field
                             label="Nom Societe"
                             name="Name"
+                            :rules="nameRules"
                             prepend-icon="person"
                             type="text"
+                            required
                             color="teal darken-2"
                           ></v-text-field>
                           <v-text-field
@@ -103,7 +119,9 @@
                             label="Email"
                             name="Email"
                             prepend-icon="email"
-                            type="text"
+                            required
+                            type="email"
+                            :rules="emailRules"
                             color="teal darken-2"
                           ></v-text-field>
                           <v-text-field
@@ -111,7 +129,9 @@
                             label="mot de passe"
                             name="password"
                             prepend-icon="lock"
+                            required
                             type="password"
+                            :rules="passwordRules"
                             color="teal"
                             accent-3
                           ></v-text-field>
@@ -120,13 +140,15 @@
                             label="confirmer le mot de passe"
                             name="password"
                             prepend-icon="lock"
+                            required
                             type="password"
                             :rules="[comparePasswords]"
                             color="teal"
                             accent-3
                           ></v-text-field>
-                          <div class="text-center mt-n6">
+                          <div class="text-center mt-n2">
                             <v-btn
+                              :disabled="!valid"
                               rounded
                               color="teal darken-2"
                               dark
@@ -159,10 +181,28 @@ export default {
   data() {
     return {
       step: 1,
+      valid: true,
       email: '',
       password: '',
       confirmPassword: '',
-      islogged: ''
+      islogged: '',
+      nameRules: [
+        (v) => !!v || 'Un nom est obligatoire',
+        (v) =>
+          (v && v.length <= 15) ||
+          'Le nom doit contenir moins de 15 caracteres',
+        (v) =>
+          (v && v.length >= 5) || 'le nom doit contenir plus de 5 caracteres'
+      ],
+      emailRules: [
+        (v) => !!v || 'Une adresse mail est obligatoire',
+        (v) => /.+@.+\..+/.test(v) || 'Saisir une adresse mail valide '
+      ],
+      passwordRules: [
+        (v) =>
+          (v && v.length >= 5) ||
+          'le mot de passe doit contenir minimum 5 caracteres'
+      ]
     }
   },
   computed: {
@@ -174,7 +214,7 @@ export default {
     comparePasswords() {
       return this.password !== this.confirmPassword
         ? 'le mot de passe ne correspond pas'
-        : ''
+        : true
     }
   },
   watch: {
@@ -184,15 +224,22 @@ export default {
     }
   },
   methods: {
+    validate() {
+      this.$refs.form.validate()
+    },
     onSignIn() {
       console.log('login')
       this.$store.dispatch('signUserIn', true)
     },
     onSignUp() {
-      console.log({
+      // console.log({
+      //   email: this.email,
+      //   password: this.password,
+      //   confirmPassword: this.confirmPassword
+      // })
+      this.$store.dispatch('signUserUp', {
         email: this.email,
-        password: this.password,
-        confirmPassword: this.confirmPassword
+        password: this.password
       })
     }
   }
