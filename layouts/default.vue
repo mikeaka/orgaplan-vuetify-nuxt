@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       drawer: true,
-      islogged: false,
+      // islogged: false,
       items: [
         { icon: 'mdi-home', text: 'Home' },
         { icon: 'mdi-fire', text: 'Trending' },
@@ -73,19 +73,24 @@ export default {
       ]
     }
   },
+
   computed: {
     ...mapState({
       // map `this.doneCount` to `this.$store.getters.doneTodosCount`
       // doneCount: 'doneTodosCount'
-      usersState: 'users'
+      usersState: 'users',
+      islogged: 'islogged'
     }),
     ...mapGetters({
       // map `this.doneCount` to `this.$store.getters.doneTodosCount`
       // doneCount: 'doneTodosCount'
       loadUserByCsName: 'loadUserByCsName'
-    }),
-    userIsLoggedon() {
-      return this.loadUserByCsName(this.userName)
+    })
+  },
+  watch: {
+    islogged(value) {
+      if (value === true) {
+      }
     }
   },
   head: {

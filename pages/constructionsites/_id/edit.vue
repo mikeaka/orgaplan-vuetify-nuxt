@@ -36,8 +36,6 @@
 
         <v-stepper-items>
           {{ chantier }}
-          {{ editedConstructionSite.chantierid }}
-          {{ siteName }}
           <v-stepper-content step="1">
             <v-card class="mb-7" color="blue-grey lighten-5" height="355px">
               <v-row>
@@ -105,7 +103,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" sm="7">
+                <v-col cols="12" sm="10">
                   <v-text-field
                     v-model="editedConstructionSite.imageUrl"
                     class="ml-3"
@@ -256,16 +254,18 @@ export default {
       // id: this.chantier,
       editedIndex: -1,
       editedConstructionSite: {
-        chantierid: this.chantier.id,
-        siteName: this.chantier.siteName
-        // imageUrl: this.findEditedConstructionSite.imageUrl,
-        // active: this.findEditedConstructionSite.active,
-        // status: this.findEditedConstructionSite.status,
-        // address: this.findEditedConstructionSite.address,
-        // postalCode: this.findEditedConstructionSite.postalCode,
-        // location: this.findEditedConstructionSite.location,
-        // projectDuration: this.findEditedConstructionSite.projectDuration,
-        // responsible: this.findEditedConstructionSite.responsible
+        chantierid: this.chantier.id
+        // siteName: this.chantier.siteName
+        // siteName: this.chantier.findEditedConstructionSite.siteName
+        // imageUrl: this.chantier.findEditedConstructionSite.imageUrl,
+        // active: this.chantier.findEditedConstructionSite.active,
+        // status: this.chantier.findEditedConstructionSite.status,
+        // address: this.chantier.findEditedConstructionSite.address,
+        // postalCode: this.chantier.findEditedConstructionSite.postalCode,
+        // location: this.chantier.findEditedConstructionSite.location,
+        // projectDuration: this.chantier.findEditedConstructionSite
+        //   .projectDuration,
+        // responsible: this.chantier.findEditedConstructionSite.responsible
       },
       editedDeliveryAreas: '',
       editedSiteMaterials: '',
@@ -281,25 +281,33 @@ export default {
       siteMaterials: 'loadSiteMaterials',
       siteProviders: 'loadSiteProviders',
       editConstructionSiteId: 'loadConstructionSiteById'
-    }),
-    findEditedConstructionSite() {
-      return this.editConstructionSiteId(this.id)
-    }
+    })
+    // findEditedConstructionSite() {
+    //   return this.editConstructionSiteId(this.id)
+    // }
   },
 
   watch: {
     dialog(val) {
       val || this.close()
-    }
+    },
+    // call again the method if the route changes
+    $route: 'fetchData'
+  },
+  created() {
+    this.fetchData()
   },
 
   mounted() {
-    console.log(this.siteName)
+    console.log(this.chantier.findEditedConstructionSite.siteName)
   },
   methods: {
     // reset() {
     //   this.$refs.form.reset()
     // },
+    fetchData() {
+      return this.chantier
+    }
   }
 }
 </script>

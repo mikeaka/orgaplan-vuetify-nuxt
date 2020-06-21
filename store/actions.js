@@ -42,5 +42,9 @@ export default {
     //   console.log(error)
     //   commit('setLoading', false)
     // })
+  },
+  signUserUp({ commit }, payload) {},
+  signUserIn({ commit }, payload) {
+    commit('setIsLoggedIn', payload)
   }
 }

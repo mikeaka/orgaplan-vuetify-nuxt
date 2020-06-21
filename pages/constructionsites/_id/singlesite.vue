@@ -108,16 +108,14 @@
               <v-list v-for="area in deliveryAreasByCsId" :key="area.id">
                 <v-chip class="ma-2" color="#022d30" outlined>
                   <v-icon left>mdi-server-plus</v-icon>
-                  <v-list-item> {{ area.name }} </v-list-item>
+                  <v-list-item>{{ area.name }}</v-list-item>
                 </v-chip>
               </v-list>
             </v-flex>
           </v-layout>
           <v-divider></v-divider>
           <v-layout row wrap class="ma-3">
-            <h4 class="primary--text">
-              Materiels affectes au chantier
-            </h4>
+            <h4 class="primary--text">Materiels affectes au chantier</h4>
             <v-flex
               flex-direction:
               row
@@ -131,16 +129,14 @@
               >
                 <v-chip class="ma-2" color="#022d30" outlined>
                   <v-icon left>mdi-wrench</v-icon>
-                  <v-list-item> {{ material.name }} </v-list-item>
+                  <v-list-item>{{ material.name }}</v-list-item>
                 </v-chip>
               </v-list>
             </v-flex>
           </v-layout>
           <v-divider></v-divider>
           <v-layout row wrap class="ma-3">
-            <h4 class="primary--text">
-              Entreprises affectes au chantier
-            </h4>
+            <h4 class="primary--text">Entreprises affectes au chantier</h4>
             <v-flex
               flex-direction:
               row
@@ -151,16 +147,14 @@
               <v-list v-for="compagny in compagnyByCsName" :key="compagny.id">
                 <v-chip class="ma-2" color="#022d30" outlined>
                   <v-icon left>mdi-wrench</v-icon>
-                  <v-list-item> {{ compagny.name }} </v-list-item>
+                  <v-list-item>{{ compagny.name }}</v-list-item>
                 </v-chip>
               </v-list>
             </v-flex>
           </v-layout>
           <v-divider></v-divider>
           <v-layout row wrap class="ma-3">
-            <h4 class="primary--text">
-              Fournisseurs affectes au chantier
-            </h4>
+            <h4 class="primary--text">Fournisseurs affectes au chantier</h4>
             <v-flex
               flex-direction:
               row
@@ -171,16 +165,14 @@
               <v-list v-for="provider in siteProvider" :key="provider.id">
                 <v-chip class="ma-2" color="#022d30" outlined>
                   <v-icon left>mdi-wrench</v-icon>
-                  <v-list-item> {{ provider.providerName }} </v-list-item>
+                  <v-list-item>{{ provider.providerName }}</v-list-item>
                 </v-chip>
               </v-list>
             </v-flex>
           </v-layout>
           <v-divider></v-divider>
           <v-layout row wrap class="ma-3">
-            <h4 class="primary--text">
-              Casiers affectes au chantier
-            </h4>
+            <h4 class="primary--text">Casiers affectes au chantier</h4>
             <v-flex
               flex-direction:
               row
@@ -191,7 +183,7 @@
               <v-list v-for="locker in lockersByCsId" :key="locker.id">
                 <v-chip class="ma-2" color="#022d30" outlined>
                   <v-icon left>mdi-wrench</v-icon>
-                  <v-list-item> {{ locker.name }} </v-list-item>
+                  <v-list-item>{{ locker.name }}</v-list-item>
                 </v-chip>
               </v-list>
             </v-flex>
@@ -214,17 +206,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      editedConstructionSite: {
-        // siteName: this.findEditedConstructionSite.siteName
-        // imageUrl: this.findEditedConstructionSite.imageUrl,
-        // active: this.findEditedConstructionSite.active,
-        // status: this.findEditedConstructionSite.status,
-        // address: this.findEditedConstructionSite.address,
-        // postalCode: this.findEditedConstructionSite.postalCode,
-        // location: this.findEditedConstructionSite.location,
-        // projectDuration: this.findEditedConstructionSite.projectDuration,
-        // responsible: this.findEditedConstructionSite.responsible
-      },
+
       editedDeliveryAreas: '',
       editedSiteMaterials: '',
       editedProviders: ''
@@ -262,10 +244,18 @@ export default {
     },
     compagnyByCsName() {
       return this.loadCompagnyByCsName(this.id)
+    },
+    loading() {
+      return this.$store.getters.loading
     }
   },
   created() {
     console.log(this.$route.params.id)
+  },
+  methods: {
+    // reset() {
+    //   this.$refs.form.reset()
+    // },
   }
 }
 </script>

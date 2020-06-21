@@ -1,5 +1,6 @@
 export default () => ({
   loading: false,
+  islogged: false,
   deliveryAreas: [
     {
       id: 'sssdss',
@@ -276,5 +277,5 @@ export default () => ({
       endDate: ''
     }
   ],
-  users: [{ id: 'iuydsa', username: 'mike', islogged: 'true' }]
+  users: [{ id: 'iuydsa', username: 'mike' }]
 })

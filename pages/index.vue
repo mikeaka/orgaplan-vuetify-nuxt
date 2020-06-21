@@ -1,169 +1,221 @@
 <template>
-  <v-container class="grey lighten-5 v-layout v-content__wrap" fluid>
-    <v-layout row justify-center>
-      <div class="text-center ma-5">
-        <v-menu offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn class="ma-2" text left color="primary" dark v-on="on">
-              <v-icon>expand_more</v-icon>
-              <span>Choisir un Chantier</span>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="chantier in constructionSites"
-              :key="chantier.id"
-              @click="siteSelection = chantier.siteName"
-            >
-              <v-list-item-title>{{ chantier.siteName }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-        <v-flex>
-          <p v-if="siteSelection">
-            Vous avez selectionner
-            <strong class="red--text text--lighten-1">{{
-              siteSelection
-            }}</strong>
-          </p>
-          <p v-if="!siteSelection">Veuillez choisir un chantier</p>
-        </v-flex>
-      </div>
-    </v-layout>
-    <div v-for="chantier in constructionSites" :key="chantier.id">
-      <v-layout
-        v-if="siteSelection === chantier.siteName"
-        class="ma-1"
-        row
-        justify-space-between
-      >
-        <v-flex class="mt-6">
-          <v-card class="text-xs-center pa-2" max-width="350" width="340" flat>
-            <v-card-title class="text-xs-center justify-center"
-              >Aire de Livraison</v-card-title
-            >
-            <v-list-item
-              v-for="deliveryArea in filteredDeliveryAreas"
-              :key="deliveryArea.id"
-            >
-              <v-btn
-                block
-                color="primary"
-                outlined
-                :disabled="!deliveryArea.active"
-                >{{ deliveryArea.name }}</v-btn
-              >
-            </v-list-item>
-          </v-card>
+  <v-app>
+    <v-content>
+      <v-container class="fill-height" fluid>
+        <v-row align="center" justify="center">
+          <v-col cols="12" sm="8" md="8">
+            <v-card class="elevation-12 mt-7" width="700px" height="392px">
+              <v-window v-model="step">
+                <v-window-item :value="1">
+                  <v-row>
+                    <v-col cols="12" md="8">
+                      <v-card-text class="mt-12">
+                        <h1
+                          class="text-center display-2 teal--text text--darken-2 mb-5"
+                        >
+                          ORGAPLAN
+                        </h1>
 
-          <v-card class="text-xs-center mt-4" max-width="344" width="340" flat>
-            <v-card-title class="text-xs-center justify-center"
-              >Materiels Disponible</v-card-title
-            >
-            <v-list-item
-              v-for="materiel in filteredMaterials"
-              :key="materiel.id"
-            >
-              <v-btn
-                block
-                color="primary"
-                outlined
-                :disabled="!materiel.active"
-                >{{ materiel.name }}</v-btn
-              >
-            </v-list-item>
-          </v-card>
-        </v-flex>
-        <v-flex>
-          <div class="title mb-1" align="center">Plan Chantier</div>
-          <v-card class="mx-auto" flat>
-            <v-img
-              :src="chantier.imageUrl"
-              class="white--text align-end"
-              height="600px"
-              width="600px"
-            >
-              <v-card-title>Chantier</v-card-title>
-              <v-btn color="secondary">zone de livraison</v-btn>
-              <v-btn color="purple" dark small absolute top right
-                >zone de livraison 2</v-btn
-              >
-            </v-img>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </div>
-  </v-container>
+                        <v-form @submit.prevent="onSignIn">
+                          <v-text-field
+                            label="Email"
+                            name="Email"
+                            prepend-icon="email"
+                            color="teal darken-2"
+                          >
+                          </v-text-field>
+                          <v-text-field
+                            id="password"
+                            label="mot de passe"
+                            name="password"
+                            prepend-icon="lock"
+                            type="password"
+                            color="teal"
+                            accent-3
+                          >
+                          </v-text-field>
+                          <div class="text-center mt-3">
+                            <v-btn
+                              rounded
+                              color="teal darken-2"
+                              dark
+                              type="submit"
+                              >SIGN IN</v-btn
+                            >
+                          </div>
+                        </v-form>
+                        <h3 class="text-center mt-3">Mot de passe oublie ?</h3>
+                      </v-card-text>
+                    </v-col>
+                    <v-col cols="12" md="4" class="teal darken-2">
+                      <v-card-text class="white--text mt-12">
+                        <h1 class="text-center display-1">Bonjour, !</h1>
+                        <h5 class="text-center">
+                          Entrer vos informations personelles et commencer a
+                          utiliser Orgaplan pour plannifier vos livraisons pour
+                          le bon deroulement de votre chantier
+                        </h5>
+                      </v-card-text>
+                      <div class="text-center">
+                        <v-btn rounded outlined dark @click="step++"
+                          >Enregistrement</v-btn
+                        >
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-window-item>
+                <v-window-item :value="2">
+                  <v-row class="fill-height">
+                    <v-col cols="12" md="4" class="teal darken-2 mb-5">
+                      <v-card-text class="white--text mt-9">
+                        <h1 class="text-center display-1">
+                          Bienvenue sur Orgaplan
+                        </h1>
+
+                        <h5 class="text-center mt-2">
+                          Pour profiter entierement d'Orgaplan, enregistrer vous
+                          et commencer a planifier les moyens pour vos
+                          livraisons
+                        </h5>
+                      </v-card-text>
+                      <div class="text-center mt-5">
+                        <v-btn rounded outlined dark @click="step--"
+                          >S'authentifier</v-btn
+                        >
+                      </div>
+                    </v-col>
+                    <v-col cols="12" md="8">
+                      <v-card-text class="mt-n2">
+                        <h1
+                          class="text--center display-2 teal--text text--darken-2"
+                        >
+                          Creer un compte
+                        </h1>
+                        <br />
+                        <v-form @submit.prevent="onSignUp">
+                          <v-text-field
+                            label="Nom Societe"
+                            name="Name"
+                            prepend-icon="person"
+                            type="text"
+                            color="teal darken-2"
+                          >
+                          </v-text-field>
+                          <v-text-field
+                            v-model="email"
+                            label="Email"
+                            name="Email"
+                            prepend-icon="email"
+                            type="text"
+                            color="teal darken-2"
+                          >
+                          </v-text-field>
+                          <v-text-field
+                            v-model="password"
+                            label="mot de passe"
+                            name="password"
+                            prepend-icon="lock"
+                            type="password"
+                            color="teal"
+                            accent-3
+                          >
+                          </v-text-field>
+                          <v-text-field
+                            v-model="confirmPassword"
+                            label="confirmer le mot de passe"
+                            name="password"
+                            prepend-icon="lock"
+                            type="password"
+                            :rules="[comparePasswords]"
+                            color="teal"
+                            accent-3
+                          >
+                          </v-text-field>
+                          <div class="text-center mt-n6">
+                            <v-btn
+                              rounded
+                              color="teal darken-2"
+                              dark
+                              type="submit"
+                              >Enregistrer</v-btn
+                            >
+                          </div>
+                        </v-form>
+                      </v-card-text>
+                    </v-col>
+                  </v-row>
+                </v-window-item>
+              </v-window>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
+    <NuxtLink v-if="islogged" to="/home"> </NuxtLink>
+  </v-app>
 </template>
 
-<style scoped>
-.v-layout {
-  height: 5rem;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-}
-.v-content {
-  background-image: url('https://www.xmple.com/wallpaper/blue-gradient-grey-linear-1920x1080-c2-add8e6-c0c0c0-a-75-f-14.svg')
-    no-repeat center center;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-size: cover;
-  transform: scale(1.1);
-}
-</style>
-
 <script>
-// import { mapState, mapMutations, mapGetters } from 'vuex'
-import { mapGetters } from 'vuex'
-
 export default {
-  name: 'Home',
-  props: {},
+  props: {
+    source: String
+  },
   data() {
     return {
-      siteSelection: ''
+      step: 1,
+      email: '',
+      password: '',
+      confirmPassword: ''
     }
   },
-
   computed: {
-    ...mapGetters({
-      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
-      // doneCount: 'doneTodosCount'
-      deliveryAreas: 'loadDeliveryAreas',
-      constructionSites: 'loadConstructionSites',
-      siteMaterials: 'loadSiteMaterials',
-      loadDeliveryAreasByCsName: 'loadDeliveryAreasByCsName',
-      loadSiteMaterialsByCsName: 'loadSiteMaterialsByCsName'
-    }),
-
-    // deliveryAreaByCsName() {
-    //   return this.$store.getters.loadDeliveryAreaByCsName
-    // },
-    filteredDeliveryAreas() {
-      return this.loadDeliveryAreasByCsName(this.siteSelection)
-    },
-    filteredMaterials() {
-      return this.loadSiteMaterialsByCsName(this.siteSelection)
+    comparePasswords() {
+      return this.password !== this.confirmPassword
+        ? 'le mot de passe ne correspond pas'
+        : ''
     }
-    // deliveryAreas() {
-    //   return this.$store.getters.loadDeliveryAreas
-    // },
-    // constructionSites() {
-    //   return this.$store.getters.loadConstructionSites
-    // },
-    // siteMaterials() {
-    //   return this.$store.getters.loadSiteMaterials
-    // }
   },
-  mounted() {
-    // this.filtered = this.filteredAreas
-    // console.log(this.filtered)
+  watch: {
+    islogged(value) {
+      if (value === true) {
+        this.$route.push('/home')
+      }
+    }
   },
-
-  methods: {}
+  methods: {
+    onSignIn() {
+      console.log('login')
+      this.$store.dispatch('signUserIn', true)
+    },
+    onSignUp() {
+      console.log({
+        email: this.email,
+        password: this.password,
+        confirmPassword: this.confirmPassword
+      })
+    }
+  }
 }
 </script>
+
+<style scoped>
+.v-card {
+  margin-top: 5rem;
+  width: 400px;
+  height: 400px;
+}
+
+.flexlogin {
+  align-items: stretch;
+}
+
+.v-container {
+  align-items: stretch;
+}
+
+@media screen and (min-width: 60em) {
+  .v-card {
+    flex: 0 1 calc(25% - 1em);
+  }
+}
+</style>

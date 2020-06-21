@@ -37,5 +37,8 @@ export default {
   },
   setLoading(state, payload) {
     state.loading = payload
+  },
+  setIsLoggedIn(state, payload) {
+    state.islogged = payload
   }
 }

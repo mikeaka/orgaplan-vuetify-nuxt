@@ -9,12 +9,18 @@
     >
       <v-system-bar></v-system-bar>
       <v-list nav dense>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title>Welcome Mr John</v-list-item-title>
-            <v-list-item-subtitle>john@compagny.com</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
+        <v-img :aspect-ratio="16 / 9" :src="logo">
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="mt-4" align="center"
+                >Welcome Mr John</v-list-item-title
+              >
+              <v-list-item-subtitle align="center"
+                >john@compagny.com</v-list-item-subtitle
+              >
+            </v-list-item-content>
+          </v-list-item>
+        </v-img>
         <v-divider class="mb-2"></v-divider>
 
         <v-list-item
@@ -125,6 +131,7 @@ a.nav-link.toolbar-items-a {
 export default {
   data() {
     return {
+      logo: require('@/assets/logo.png'),
       sideNav: false,
       AdminUser: true,
       menuItems: [
