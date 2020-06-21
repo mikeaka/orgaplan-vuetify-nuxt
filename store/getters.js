@@ -110,5 +110,8 @@ export default {
   },
   loading(state) {
     return state.loading
+  },
+  IsLogged(state) {
+    return state.IsLogged
   }
 }

@@ -22,8 +22,7 @@
                             name="Email"
                             prepend-icon="email"
                             color="teal darken-2"
-                          >
-                          </v-text-field>
+                          ></v-text-field>
                           <v-text-field
                             id="password"
                             label="mot de passe"
@@ -32,8 +31,7 @@
                             type="password"
                             color="teal"
                             accent-3
-                          >
-                          </v-text-field>
+                          ></v-text-field>
                           <div class="text-center mt-3">
                             <v-btn
                               rounded
@@ -99,8 +97,7 @@
                             prepend-icon="person"
                             type="text"
                             color="teal darken-2"
-                          >
-                          </v-text-field>
+                          ></v-text-field>
                           <v-text-field
                             v-model="email"
                             label="Email"
@@ -108,8 +105,7 @@
                             prepend-icon="email"
                             type="text"
                             color="teal darken-2"
-                          >
-                          </v-text-field>
+                          ></v-text-field>
                           <v-text-field
                             v-model="password"
                             label="mot de passe"
@@ -118,8 +114,7 @@
                             type="password"
                             color="teal"
                             accent-3
-                          >
-                          </v-text-field>
+                          ></v-text-field>
                           <v-text-field
                             v-model="confirmPassword"
                             label="confirmer le mot de passe"
@@ -129,8 +124,7 @@
                             :rules="[comparePasswords]"
                             color="teal"
                             accent-3
-                          >
-                          </v-text-field>
+                          ></v-text-field>
                           <div class="text-center mt-n6">
                             <v-btn
                               rounded
@@ -151,12 +145,14 @@
         </v-row>
       </v-container>
     </v-content>
-    <NuxtLink v-if="islogged" to="/home"> </NuxtLink>
+    <NuxtLink v-if="islogged" to="/home"></NuxtLink>
   </v-app>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
+  middleware: 'authenticated',
   props: {
     source: String
   },
@@ -165,10 +161,16 @@ export default {
       step: 1,
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      islogged: ''
     }
   },
   computed: {
+    ...mapGetters({
+      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+      // doneCount: 'doneTodosCount'
+      IsLogged: 'IsLogged'
+    }),
     comparePasswords() {
       return this.password !== this.confirmPassword
         ? 'le mot de passe ne correspond pas'
@@ -178,7 +180,6 @@ export default {
   watch: {
     islogged(value) {
       if (value === true) {
-        this.$route.push('/home')
       }
     }
   },

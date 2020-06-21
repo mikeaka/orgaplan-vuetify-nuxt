@@ -137,7 +137,8 @@ export default {
       constructionSites: 'loadConstructionSites',
       siteMaterials: 'loadSiteMaterials',
       loadDeliveryAreasByCsName: 'loadDeliveryAreasByCsName',
-      loadSiteMaterialsByCsName: 'loadSiteMaterialsByCsName'
+      loadSiteMaterialsByCsName: 'loadSiteMaterialsByCsName',
+      IsLogged: 'IsLogged'
     }),
 
     // deliveryAreaByCsName() {
@@ -149,15 +150,12 @@ export default {
     filteredMaterials() {
       return this.loadSiteMaterialsByCsName(this.siteSelection)
     }
-    // deliveryAreas() {
-    //   return this.$store.getters.loadDeliveryAreas
-    // },
-    // constructionSites() {
-    //   return this.$store.getters.loadConstructionSites
-    // },
-    // siteMaterials() {
-    //   return this.$store.getters.loadSiteMaterials
-    // }
+  },
+  watch: {
+    islogged(value) {
+      if (value === true) {
+      }
+    }
   },
   mounted() {
     // this.filtered = this.filteredAreas
