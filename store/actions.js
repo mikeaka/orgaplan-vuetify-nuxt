@@ -50,6 +50,7 @@ export default {
       .auth()
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then((user) => {
+        console.log(user)
         const newUser = {
           id: user.uid,
           email: user.email,
@@ -57,7 +58,10 @@ export default {
           isAdmin: '',
           affectedCS: []
         }
+
+        console.log(newUser)
         commit('setUser', newUser)
+        this.$router.push('/')
       })
       .catch((error) => {
         console.log(error)

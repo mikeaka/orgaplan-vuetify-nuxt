@@ -200,8 +200,8 @@ export default {
       ],
       passwordRules: [
         (v) =>
-          (v && v.length >= 5) ||
-          'le mot de passe doit contenir minimum 5 caracteres'
+          (v && v.length >= 6) ||
+          'le mot de passe doit contenir minimum 6 caracteres'
       ]
     }
   },
