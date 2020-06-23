@@ -86,6 +86,7 @@ export default {
           success: colors.green.accent3
         }
       },
+
       materialIcons: true,
       css: true,
       treeShake: true,

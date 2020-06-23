@@ -52,28 +52,123 @@
                 v-model="name"
                 type="text"
                 label="event name (required)"
-              >
-              </v-text-field>
-              <v-text-field v-model="details" type="text" label="event details">
-              </v-text-field>
+              ></v-text-field>
               <v-text-field
-                v-model="start"
-                type="date"
-                label="event start date (required)"
-              >
-              </v-text-field>
-              <v-text-field
-                v-model="end"
-                type="date"
-                label="event end date (required)"
-              >
-              </v-text-field>
+                v-model="details"
+                type="text"
+                label="event details"
+              ></v-text-field>
+
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-menu
+                    ref="menu1"
+                    v-model="menu1"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="start"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
+                      <v-text-field
+                        v-model="start"
+                        label="Selectioner la date de debut de livraison"
+                        prepend-icon="event"
+                        readonly
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="start" no-title scrollable>
+                      <v-spacer></v-spacer>
+                      <v-btn flat color="primary" @click="menu1 = false"
+                        >Annuler</v-btn
+                      >
+                      <v-btn
+                        flat
+                        color="primary"
+                        @click="$refs.menu1.save(start)"
+                        >OK</v-btn
+                      >
+                    </v-date-picker>
+                  </v-menu>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-menu
+                    ref="menu2"
+                    v-model="menu2"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="end"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
+                      <v-text-field
+                        v-model="end"
+                        label="Selectioner la date de fin de livraison"
+                        prepend-icon="event"
+                        readonly
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="end" no-title scrollable>
+                      <v-spacer></v-spacer>
+                      <v-btn flat color="primary" @click="menu2 = false"
+                        >Annuler</v-btn
+                      >
+                      <v-btn flat color="primary" @click="$refs.menu2.save(end)"
+                        >OK</v-btn
+                      >
+                    </v-date-picker>
+                  </v-menu>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs11 sm5>
+                  <v-menu
+                    ref="menu3"
+                    v-model="menu3"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="time"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="time"
+                        label="Picker in menu"
+                        prepend-icon="access_time"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-time-picker
+                      v-if="menu3"
+                      v-model="time"
+                      full-width
+                      @click:minute="$refs.menu3.save(time)"
+                    ></v-time-picker>
+                  </v-menu>
+                </v-flex>
+              </v-layout>
               <v-text-field
                 v-model="color"
                 type="color"
                 label="event color (click to open color menu)"
-              >
-              </v-text-field>
+              ></v-text-field>
               <v-btn
                 type="submit"
                 color="primary"
@@ -94,6 +189,7 @@
           :events="events"
           :event-color="getEventColor"
           :type="type"
+          locale="fr-fr"
           @click:event="showEvent"
           @click:more="viewDay"
           @click:date="viewDay"
@@ -157,6 +253,9 @@ import fireDb from '../plugins/firebase'
 export default {
   components: {},
   data: () => ({
+    menu1: false,
+    menu2: false,
+    menu3: false,
     today: new Date().toISOString().substr(0, 10),
     focus: new Date().toISOString().substr(0, 10),
     type: 'month',
@@ -213,7 +312,7 @@ export default {
   },
   mounted() {
     this.getEvents()
-    //  this.$refs.calendar.checkChange()
+    this.$refs.calendar.checkChange()
   },
   methods: {
     async getEvents() {
