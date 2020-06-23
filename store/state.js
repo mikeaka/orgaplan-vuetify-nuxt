@@ -1,6 +1,6 @@
 export default () => ({
   loading: false,
-  islogged: false,
+  islogged: true,
   deliveryAreas: [
     {
       id: 'sssdss',

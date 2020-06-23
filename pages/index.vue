@@ -160,6 +160,21 @@
                       </v-card-text>
                     </v-col>
                   </v-row>
+                  <v-alert
+                    :value="successRegister"
+                    type="success"
+                    dismissible
+                    color="teal darken-2"
+                    border="left"
+                    elevation="2"
+                    colored-border
+                    icon="mdi-home"
+                    transition="scale-transition"
+                    @input="onClose"
+                  >
+                    Votre compte a ete correctement enregistre, cliquer sur
+                    s'authetifier
+                  </v-alert>
                 </v-window-item>
               </v-window>
             </v-card>
@@ -167,7 +182,6 @@
         </v-row>
       </v-container>
     </v-content>
-    <NuxtLink v-if="islogged" to="/home"></NuxtLink>
   </v-app>
 </template>
 
@@ -182,6 +196,7 @@ export default {
     return {
       step: 1,
       valid: true,
+      successRegister: false,
       email: '',
       password: '',
       confirmPassword: '',
@@ -224,6 +239,9 @@ export default {
     }
   },
   methods: {
+    onClose() {
+      this.$emit('dismissed')
+    },
     validate() {
       this.$refs.form.validate()
     },
@@ -237,10 +255,15 @@ export default {
       //   password: this.password,
       //   confirmPassword: this.confirmPassword
       // })
-      this.$store.dispatch('signUserUp', {
-        email: this.email,
-        password: this.password
-      })
+      this.$store
+        .dispatch('signUserUp', {
+          email: this.email,
+          password: this.password
+        })
+        .then(this.$router.push('/'), (this.successRegister = 'true'))
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 }
