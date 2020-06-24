@@ -1,58 +1,153 @@
 <template>
-  <v-container fluid>
-    <v-layout row wrap align-center justify-center fill-height>
-      <v-container class="mt-1" fluid>
-        <v-flex xs12 sm6 md3 class="ma-1">
-          <v-card color="#385F73" dark width="200" height="95">
-            <v-card-title class="body-2 font-weight-bold"
-              >En attente de validation</v-card-title
-            >
+  <v-container fluid class="mt-2">
+    <v-layout row wrap fill-height>
+      <v-flex xs12 sm6 md3 class="pa-1">
+        <v-card color="#385F73" dark height="95">
+          <v-card-title class="body-2 font-weight-bold"
+            >En attente de validation</v-card-title
+          >
 
-            <v-card-subtitle class="body-2"
-              >281 livraisons en attente de validation</v-card-subtitle
-            >
-          </v-card>
-          <!-- <v-card width="60" height="60" elevation="12" class="littlecard">
+          <v-card-subtitle class="body-2"
+            >281 livraisons en attente de validation</v-card-subtitle
+          >
+        </v-card>
+        <!-- <v-card width="60" height="60" elevation="12" class="littlecard">
           <v-img
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="60px"
             :src="logo"
           />
         </v-card> -->
-        </v-flex>
-        <v-flex xs12 sm6 md3 class="ma-1">
-          <v-card color="#385F73" dark width="200" height="95">
-            <v-card-title class="body-2 font-weight-bold">Validee</v-card-title>
+      </v-flex>
+      <v-flex xs12 sm6 md3 class="pa-1">
+        <v-card color="#385F73" dark height="95">
+          <v-card-title class="body-2 font-weight-bold">Validee</v-card-title>
 
-            <v-card-subtitle class="body-2"
-              >3398 livraisons validee</v-card-subtitle
-            >
-          </v-card>
-        </v-flex>
-        <v-flex xs12 sm6 md3 class="ma-1">
-          <v-card color="#385F73" dark width="200" height="95">
-            <v-card-title class="body-2 font-weight-bold"
-              >En attente de realisation</v-card-title
-            >
-            <v-card-subtitle class="body-2"
-              >3238 demandes en attente de validation</v-card-subtitle
-            >
-          </v-card>
-        </v-flex>
-        <v-flex xs12 sm6 md3 class="ma-1">
-          <v-card color="#385F73" dark width="200" height="95">
-            <v-card-title class="body-2 font-weight-bold"
-              >Effectuer</v-card-title
-            >
+          <v-card-subtitle class="body-2"
+            >3398 livraisons validee</v-card-subtitle
+          >
+        </v-card>
+      </v-flex>
+      <v-flex xs12 sm6 md3 class="pa-1">
+        <v-card color="#385F73" dark height="95">
+          <v-card-title class="body-2 font-weight-bold"
+            >En attente de realisation</v-card-title
+          >
+          <v-card-subtitle class="body-2"
+            >3238 demandes en attente de validation</v-card-subtitle
+          >
+        </v-card>
+      </v-flex>
+      <v-flex xs12 sm6 md3 class="pa-1">
+        <v-card color="#385F73" dark height="95">
+          <v-card-title class="body-2 font-weight-bold">Effectuer</v-card-title>
 
-            <v-card-subtitle class="body-2"
-              >160 livraisons effecuees</v-card-subtitle
-            >
+          <v-card-subtitle class="body-2"
+            >160 livraisons effecuees</v-card-subtitle
+          >
+        </v-card>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row wrap>
+      <v-container class="display: flex mt-3" fluid>
+        <v-flex xs12 sm6 md3 class="pa-1">
+          <v-card flat>
+            <v-text-field
+              v-model="searchByCompagny"
+              clearable
+              flat
+              solo-inverted
+              hide-details
+              prepend-inner-icon="search"
+              label="Rechercher par Societe"
+            ></v-text-field>
           </v-card>
         </v-flex>
+
+        <v-flex xs12 sm6 md3 class="pa-1">
+          <v-card flat>
+            <v-menu
+              ref="menu1"
+              v-model="menu1"
+              :close-on-content-click="false"
+              :return-value.sync="startDate"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="startDate"
+                  label="Date de Debut"
+                  prepend-icon="event"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="startDate"
+                no-title
+                scrollable
+                locale="fr-fr"
+              >
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu1 = false"
+                  >Fermer</v-btn
+                >
+                <v-btn text color="primary" @click="$refs.menu1.save(startDate)"
+                  >OK</v-btn
+                >
+              </v-date-picker>
+            </v-menu>
+          </v-card>
+        </v-flex>
+
+        <v-flex xs12 sm6 md3 class="pa-1">
+          <v-card flat>
+            <v-menu
+              ref="menu2"
+              v-model="menu2"
+              :close-on-content-click="false"
+              :return-value.sync="endDate"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="endDate"
+                  label="Date de fin"
+                  prepend-icon="event"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="endDate"
+                no-title
+                scrollable
+                locale="fr-fr"
+              >
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu2 = false"
+                  >Fermer</v-btn
+                >
+                <v-btn text color="primary" @click="$refs.menu2.save(endDate)"
+                  >OK</v-btn
+                >
+              </v-date-picker>
+            </v-menu>
+          </v-card>
+        </v-flex>
+        <v-btn small color="#022d30" dark outlined class="ml-3"
+          >Rechercher</v-btn
+        >
       </v-container>
     </v-layout>
-    <v-divider></v-divider>
+
     <v-layout row wrap>
       <v-container>
         <v-card width="1000">
@@ -89,8 +184,9 @@
   display: flex; /* or inline-flex */
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-left: 1%;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 .littlecard {
   position: absolute;
@@ -104,7 +200,11 @@ export default {
   data() {
     return {
       logo: require('@/assets/logo.png'),
-
+      searchByCompagny: '',
+      startDate: '',
+      endDate: '',
+      menu1: '',
+      menu2: '',
       search: '',
       headers: [
         {
