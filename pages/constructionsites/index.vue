@@ -37,11 +37,12 @@
             >
           </div>
         </v-flex>
+        <!--
         <v-flex>
           <div class="caption grey--text">Actions</div>
 
-          <EditConstructionSite :chantier="`${chantier.id}`" />
-        </v-flex>
+          <EditConstructionSite :chantier="chantier" />
+        </v-flex> -->
       </v-layout>
       <v-divider></v-divider>
     </v-card>
@@ -59,13 +60,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import EditConstructionSite from './_id/edit'
+// import EditConstructionSite from './_id/edit'
 
 export default {
   name: 'ConstructionSites',
 
   components: {
-    EditConstructionSite
+    // EditConstructionSite
   },
 
   data: () => ({

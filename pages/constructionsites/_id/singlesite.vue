@@ -8,7 +8,10 @@
               Details pour le chantier {{ findEditedConstructionSite.siteName }}
             </h4>
             <v-spacer></v-spacer>
-            <EditConstructionSite :chantier="{ findEditedConstructionSite }" />
+            <EditConstructionSite
+              :chantier="{ findEditedConstructionSite }"
+              :deliveryareas="deliveryAreasByCsId"
+            />
           </v-card-title>
 
           <v-divider></v-divider>

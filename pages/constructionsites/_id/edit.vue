@@ -35,7 +35,6 @@
         </v-stepper-header>
 
         <v-stepper-items>
-          {{ chantier }}
           <v-stepper-content step="1">
             <v-card class="mb-7" color="blue-grey lighten-5" height="355px">
               <v-row>
@@ -125,28 +124,29 @@
             <v-card class="mb-7" color="blue-grey lighten-5" height="355px">
               <v-row>
                 <v-col cols="11" class="ml-3">
-                  <v-autocomplete
+                  <v-select
                     v-model="editedDeliveryAreas"
-                    :items="siteDeliveryAreas"
-                    label="Selectionner les zones de livraison"
-                    item-text="name"
-                    item-value="name"
-                    multiple
+                    :value="currentDeleveryAreas"
+                    :items="deliveryAreasByCsId"
+                    attach
                     chips
+                    label="Chips"
+                    multiple
+                  ></v-select>
+                  <select
+                    v-model="editedDeliveryAreas"
+                    multiple
+                    attach
+                    chips
+                    label="Chips"
                   >
-                    <template v-slot:selection="data">
-                      <template v-if="typeof data.item !== 'object'">
-                        <v-list-item-content
-                          v-text="data.item"
-                        ></v-list-item-content>
-                      </template>
-                      <v-list-item-content>
-                        <v-list-item-title
-                          v-html="data.item.name"
-                        ></v-list-item-title>
-                      </v-list-item-content>
-                    </template>
-                  </v-autocomplete>
+                    <option
+                      v-for="area in deliveryareas"
+                      :key="area.id"
+                      :value="currentDeleveryAreas"
+                      >{{ area.name }}</option
+                    >
+                  </select>
                 </v-col>
                 <v-col cols="11" class="ml-3">
                   <v-autocomplete
@@ -243,6 +243,10 @@ export default {
     chantier: {
       type: Object,
       required: true
+    },
+    deliveryareas: {
+      type: Array,
+      required: true
     }
   },
 
@@ -254,20 +258,21 @@ export default {
       // id: this.chantier,
       editedIndex: -1,
       editedConstructionSite: {
-        chantierid: this.chantier.id
+        // chantierid: this.chantier.id,
         // siteName: this.chantier.siteName
-        // siteName: this.chantier.findEditedConstructionSite.siteName
-        // imageUrl: this.chantier.findEditedConstructionSite.imageUrl,
-        // active: this.chantier.findEditedConstructionSite.active,
-        // status: this.chantier.findEditedConstructionSite.status,
-        // address: this.chantier.findEditedConstructionSite.address,
-        // postalCode: this.chantier.findEditedConstructionSite.postalCode,
-        // location: this.chantier.findEditedConstructionSite.location,
-        // projectDuration: this.chantier.findEditedConstructionSite
-        //   .projectDuration,
-        // responsible: this.chantier.findEditedConstructionSite.responsible
+        siteName: this.chantier.findEditedConstructionSite.siteName,
+        imageUrl: this.chantier.findEditedConstructionSite.imageUrl,
+        active: this.chantier.findEditedConstructionSite.active,
+        status: this.chantier.findEditedConstructionSite.status,
+        address: this.chantier.findEditedConstructionSite.address,
+        postalCode: this.chantier.findEditedConstructionSite.postalCode,
+        location: this.chantier.findEditedConstructionSite.location,
+        projectDuration: this.chantier.findEditedConstructionSite
+          .projectDuration,
+        responsible: this.chantier.findEditedConstructionSite.responsible
       },
-      editedDeliveryAreas: '',
+      editedDeliveryAreas: [],
+      currentDeleveryAreas: [this.deliveryareas.name],
       editedSiteMaterials: '',
       editedProviders: ''
     }
@@ -280,9 +285,13 @@ export default {
       siteDeliveryAreas: 'loadDeliveryAreas',
       siteMaterials: 'loadSiteMaterials',
       siteProviders: 'loadSiteProviders',
-      editConstructionSiteId: 'loadConstructionSiteById'
-    })
-    // findEditedConstructionSite() {
+      editConstructionSiteId: 'loadConstructionSiteById',
+      loadDeliveryAreasByCsId: 'loadDeliveryAreasByCsId'
+    }),
+    deliveryAreasByCsId() {
+      return this.loadDeliveryAreasByCsId(this.id)
+    }
+    // findEditedConstructionSiteById() {
     //   return this.editConstructionSiteId(this.id)
     // }
   },
@@ -299,14 +308,14 @@ export default {
   },
 
   mounted() {
-    console.log(this.chantier.findEditedConstructionSite.siteName)
+    // console.log(this.chantier.findEditedConstructionSite)
   },
   methods: {
     // reset() {
     //   this.$refs.form.reset()
     // },
-    fetchData() {
-      return this.chantier
+    async fetchData() {
+      return await this.chantier.findEditedConstructionSite
     }
   }
 }
