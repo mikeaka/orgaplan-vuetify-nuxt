@@ -67,10 +67,8 @@
                     :close-on-content-click="false"
                     :nudge-right="40"
                     :return-value.sync="start"
-                    lazy
                     transition="scale-transition"
                     offset-y
-                    full-width
                     min-width="290px"
                   >
                     <template v-slot:activator="{ on }">
@@ -84,11 +82,11 @@
                     </template>
                     <v-date-picker v-model="start" no-title scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menu1 = false"
+                      <v-btn text color="primary" @click="menu1 = false"
                         >Annuler</v-btn
                       >
                       <v-btn
-                        flat
+                        text
                         color="primary"
                         @click="$refs.menu1.save(start)"
                         >OK</v-btn
@@ -105,10 +103,8 @@
                     :close-on-content-click="false"
                     :nudge-right="40"
                     :return-value.sync="end"
-                    lazy
                     transition="scale-transition"
                     offset-y
-                    full-width
                     min-width="290px"
                   >
                     <template v-slot:activator="{ on }">
@@ -122,10 +118,10 @@
                     </template>
                     <v-date-picker v-model="end" no-title scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menu2 = false"
+                      <v-btn text color="primary" @click="menu2 = false"
                         >Annuler</v-btn
                       >
-                      <v-btn flat color="primary" @click="$refs.menu2.save(end)"
+                      <v-btn text color="primary" @click="$refs.menu2.save(end)"
                         >OK</v-btn
                       >
                     </v-date-picker>
@@ -158,7 +154,6 @@
                     <v-time-picker
                       v-if="menu3"
                       v-model="time"
-                      full-width
                       @click:minute="$refs.menu3.save(time)"
                     ></v-time-picker>
                   </v-menu>
@@ -269,6 +264,7 @@ export default {
     details: null,
     start: null,
     end: null,
+    time: null,
     color: '#1976D2',
 
     currentlyEditing: null,
@@ -312,6 +308,7 @@ export default {
   },
   mounted() {
     this.getEvents()
+    this.$refs.calendar.scrollToTime('08:00')
     this.$refs.calendar.checkChange()
   },
   methods: {
