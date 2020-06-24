@@ -135,7 +135,7 @@
                     v-model="menu3"
                     :close-on-content-click="false"
                     :nudge-right="40"
-                    :return-value.sync="time"
+                    :return-value.sync="starttime"
                     transition="scale-transition"
                     offset-y
                     max-width="290px"
@@ -143,7 +143,7 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="time"
+                        v-model="starttime"
                         label="Picker in menu"
                         prepend-icon="access_time"
                         readonly
@@ -153,12 +153,42 @@
                     </template>
                     <v-time-picker
                       v-if="menu3"
-                      v-model="time"
-                      @click:minute="$refs.menu3.save(time)"
+                      v-model="starttime"
+                      @click:minute="$refs.menu3.save(starttime)"
+                    ></v-time-picker>
+                  </v-menu>
+                </v-flex>
+                <v-flex xs11 sm5>
+                  <v-menu
+                    ref="menu4"
+                    v-model="menu4"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="endtime"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="endtime"
+                        label="Picker in menu"
+                        prepend-icon="access_time"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-time-picker
+                      v-if="menu4"
+                      v-model="endtime"
+                      @click:minute="$refs.menu4.save(endtime)"
                     ></v-time-picker>
                   </v-menu>
                 </v-flex>
               </v-layout>
+
               <v-text-field
                 v-model="color"
                 type="color"
@@ -251,6 +281,7 @@ export default {
     menu1: false,
     menu2: false,
     menu3: false,
+    menu4: false,
     today: new Date().toISOString().substr(0, 10),
     focus: new Date().toISOString().substr(0, 10),
     type: 'month',
@@ -264,7 +295,8 @@ export default {
     details: null,
     start: null,
     end: null,
-    time: null,
+    starttime: null,
+    endtime: null,
     color: '#1976D2',
 
     currentlyEditing: null,
@@ -330,8 +362,8 @@ export default {
         await fireDb.collection('calEnv').add({
           name: this.name,
           details: this.details,
-          start: this.start,
-          end: this.end,
+          start: this.start + ' ' + this.starttime,
+          end: this.end + ' ' + this.endtime,
           color: this.color
         })
         this.getEvents()
